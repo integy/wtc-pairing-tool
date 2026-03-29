@@ -328,22 +328,8 @@
 
         // Fetch teams from GitHub on page load
         function fetchTeamList() {
-            fetch('https://api.github.com/repos/integy/wtc-pairing-tool/contents/teams')
-                .then(r => r.json())
-                .then(files => {
-                    availableTeams = files.filter(f => f.name.endsWith('.xml'));
-                    populateTeamDropdowns();
-                })
-                .catch(e => {
-                    // Fallback to hardcoded list
-                    availableTeams = [
-                        { name: 'hk-team.xml', download_url: 'https://raw.githubusercontent.com/integy/wtc-pairing-tool/main/teams/hk-team.xml' },
-                        { name: 'japan-team.xml', download_url: 'https://raw.githubusercontent.com/integy/wtc-pairing-tool/main/teams/japan-team.xml' },
-                        { name: 'france-team.xml', download_url: 'https://raw.githubusercontent.com/integy/wtc-pairing-tool/main/teams/france-team.xml' },
-                        { name: 'sample-opponent.xml', download_url: 'https://raw.githubusercontent.com/integy/wtc-pairing-tool/main/teams/sample-opponent.xml' }
-                    ];
-                    populateTeamDropdowns();
-                });
+            // Use embedded TEAMS data directly
+            populateTeamDropdowns();
         }
 
         function populateTeamDropdowns() {
@@ -353,10 +339,12 @@
             hkSelect.innerHTML = '<option value="">-- Select Team --</option>';
             oppSelect.innerHTML = '<option value="">-- Select Team --</option>';
             
-            availableTeams.forEach(file => {
-                const displayName = file.name.replace('.xml', '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                const opt1 = new Option(displayName, file.download_url);
-                const opt2 = new Option(displayName, file.download_url);
+            // Use embedded TEAMS data directly
+            Object.keys(TEAMS).forEach(key => {
+                const team = TEAMS[key];
+                const displayName = team.name;
+                const opt1 = new Option(displayName, key);
+                const opt2 = new Option(displayName, key);
                 hkSelect.add(opt1);
                 oppSelect.add(opt2);
             });
@@ -403,41 +391,32 @@
         }
 
         function loadSelectedTeams() {
-            const hkUrl = document.getElementById('hk-team-select').value;
-            const oppUrl = document.getElementById('opp-team-select').value;
+            const hkKey = document.getElementById('hk-team-select').value;
+            const oppKey = document.getElementById('opp-team-select').value;
             
             let loaded = 0;
             const checkDone = () => {
                 loaded++;
                 if (loaded >= 2) {
-                    alert('Teams loaded! Click "Start 3-Round Pairing" to begin.');
+                    document.getElementById('load-btn').textContent = 'LOADED ✓';
+                    document.getElementById('load-btn').style.background = '#4ade80';
                 }
             };
             
-            if (hkUrl) {
-                fetch(hkUrl)
-                    .then(r => r.text())
-                    .then(xml => {
-                        hkTeam = parseTeamXML(xml);
-                        document.getElementById('hk-name').textContent = hkTeam.name;
-                        renderPlayers('hk-players', hkTeam.players);
-                        checkDone();
-                    })
-                    .catch(e => alert('Error loading HK team'));
+            if (hkKey && TEAMS[hkKey]) {
+                hkTeam = TEAMS[hkKey];
+                document.getElementById('hk-name').textContent = hkTeam.name;
+                renderPlayers('hk-players', hkTeam.players);
+                checkDone();
             } else {
                 checkDone();
             }
             
-            if (oppUrl) {
-                fetch(oppUrl)
-                    .then(r => r.text())
-                    .then(xml => {
-                        oppTeam = parseTeamXML(xml);
-                        document.getElementById('opp-name').textContent = oppTeam.name;
-                        renderPlayers('opp-players', oppTeam.players);
-                        checkDone();
-                    })
-                    .catch(e => alert('Error loading Opponent team'));
+            if (oppKey && TEAMS[oppKey]) {
+                oppTeam = TEAMS[oppKey];
+                document.getElementById('opp-name').textContent = oppTeam.name;
+                renderPlayers('opp-players', oppTeam.players);
+                checkDone();
             } else {
                 checkDone();
             }
