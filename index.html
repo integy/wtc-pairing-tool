@@ -543,9 +543,11 @@
                 return { hkIdx, hkPlayer, oppBestAttScore, oppBestAttName, hkAttackAvg, netAdvantage, displayIdx };
             });
             
-            // Find best defender (max net advantage)
+            // Find all best defenders (max net advantage, including ties)
             defenderAnalysis.sort((a, b) => b.netAdvantage - a.netAdvantage);
-            const bestDefender = defenderAnalysis[0];
+            const bestNet = defenderAnalysis[0].netAdvantage;
+            const bestDefenders = defenderAnalysis.filter(d => Math.abs(d.netAdvantage - bestNet) < 0.001);
+            const bestIndices = new Set(bestDefenders.map(d => d.displayIdx));
             
             function calcAvg(scores, names) {
                 let total = 0, count = 0;
@@ -555,7 +557,7 @@
             
             let html = '<thead><tr><th>Opp \\ HK</th>';
             hkNames.forEach((n, i) => {
-                const isBest = i === bestDefender.displayIdx;
+                const isBest = bestIndices.has(i);
                 const marker = isBest ? ' ⭐' : '';
                 html += `<th${isBest ? ' style="background:#2d5a2d;color:#4ade80;"' : ''}>${n}${marker}</th>`;
             });
@@ -580,12 +582,13 @@
             
             table.innerHTML = html;
             
-            // Add suggestion text
-            if (bestDefender && bestDefender.netAdvantage > -Infinity) {
-                const suggestDiv = document.getElementById(round + '-suggest');
-                if (suggestDiv) {
-                    suggestDiv.innerHTML = `💡 <b>Suggested HK Defender:</b> ${bestDefender.hkPlayer.name} (vs ${bestDefender.oppBestAttName} = ${bestDefender.oppBestAttScore.toFixed(1)}) | HK Attackers avg: ${bestDefender.hkAttackAvg.toFixed(1)} | Net: +${bestDefender.netAdvantage.toFixed(1)}`;
-                }
+            // Add suggestion text (show all tied defenders)
+            const suggestDiv = document.getElementById(round + '-suggest');
+            if (suggestDiv && bestDefenders.length > 0) {
+                const names = bestDefenders.map(d => `${d.hkPlayer.name}`).join(', ');
+                const first = bestDefenders[0];
+                const star = bestDefenders.length > 1 ? ' ⭐⭐ (TIE)' : ' ⭐';
+                suggestDiv.innerHTML = `💡 <b>Suggested HK Defender${star}:</b> ${names} | vs ${first.oppBestAttName} = ${first.oppBestAttScore.toFixed(1)} | HK Attackers avg: ${first.hkAttackAvg.toFixed(1)} | Net: ${first.netAdvantage >= 0 ? '+' : ''}${first.netAdvantage.toFixed(1)}`;
             }
             
             section.style.display = 'block';
