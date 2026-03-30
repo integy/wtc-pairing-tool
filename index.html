@@ -169,13 +169,6 @@
                     </div>
                 </div>
 
-                <!-- All Matchups Analysis -->
-                <div id="matchups-section" style="display:none;margin-bottom:20px;">
-                    <h3 style="color:#FFDE00;margin-bottom:10px;">🎯 All Matchups Analysis</h3>
-                    <div id="matchups-list" style="max-height:300px;overflow-y:auto;"></div>
-                    <div id="matchups-summary" style="margin-top:15px;padding:12px;background:#2a2a4e;border-radius:8px;font-size:1rem;"></div>
-                </div>
-
                 <div class="team-grid">
                     <div class="team-box hk">
                         <h3>🇭🇰 <span id="hk-name">Hong Kong</span></h3>
@@ -683,74 +676,6 @@
             matrixBody.innerHTML = bodyHtml;
             
             matrixSection.style.display = 'block';
-            
-            // Show all matchups analysis
-            showAllMatchups();
-        }
-
-        // Calculate and display all possible matchups with averages
-        function showAllMatchups() {
-            if (!hkTeam || !oppTeam) return;
-            
-            const matchupsSection = document.getElementById('matchups-section');
-            const matchupsList = document.getElementById('matchups-list');
-            const matchupsSummary = document.getElementById('matchups-summary');
-            
-            const hkPlayers = hkTeam.players;
-            const oppPlayers = oppTeam.players;
-            
-            // Calculate all matchups
-            const matchups = [];
-            let totalAvg = 0, count = 0;
-            
-            oppPlayers.forEach(opp => {
-                hkPlayers.forEach(hk => {
-                    const hkScore = opp.scores?.[hk.name]; // Opp's score against HK
-                    const oppScore = hk.scores?.[opp.name]; // HK's score against Opp
-                    
-                    if (hkScore !== undefined && oppScore !== undefined) {
-                        const avg = (hkScore + oppScore) / 2;
-                        totalAvg += avg;
-                        count++;
-                        matchups.push({ hk, opp, hkScore, oppScore, avg });
-                    }
-                });
-            });
-            
-            // Sort by average (best for HK first = lowest oppScore)
-            matchups.sort((a, b) => a.avg - b.avg);
-            
-            // Display matchups grouped by HK player
-            let listHtml = '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;">';
-            listHtml += '<thead><tr style="background:#1a1a2e;"><th>HK Player</th><th>Opp Player</th><th>HK Score</th><th>Opp Score</th><th>Avg</th></tr></thead><tbody>';
-            
-            matchups.forEach(m => {
-                const avgColor = m.avg >= 4 ? '#4ade80' : m.avg >= 3 ? '#fbbf24' : '#ef4444';
-                listHtml += `<tr style="border-bottom:1px solid #334;">
-                    <td style="padding:6px;color:#DE2910;">${m.hk.name}<br><span style="font-size:0.7rem;color:#888;">${m.hk.army}</span></td>
-                    <td style="padding:6px;color:#00d4ff;">${m.opp.name}<br><span style="font-size:0.7rem;color:#888;">${m.opp.army}</span></td>
-                    <td style="padding:6px;text-align:center;color:#DE2910;">${m.hkScore.toFixed(1)}</td>
-                    <td style="padding:6px;text-align:center;color:#00d4ff;">${m.oppScore.toFixed(1)}</td>
-                    <td style="padding:6px;text-align:center;font-weight:bold;color:${avgColor};">${m.avg.toFixed(2)}</td>
-                </tr>`;
-            });
-            
-            listHtml += '</tbody></table>';
-            matchupsList.innerHTML = listHtml;
-            
-            // Summary
-            const overallAvg = count > 0 ? (totalAvg / count) : 0;
-            const avgColor = overallAvg >= 4 ? '#4ade80' : overallAvg >= 3 ? '#fbbf24' : '#ef4444';
-            matchupsSummary.innerHTML = `
-                <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;">
-                    <div><span style="color:#888;">Total Matchups:</span> <b>${count}</b></div>
-                    <div><span style="color:#888;">Overall Avg Score:</span> <b style="color:${avgColor};font-size:1.2rem;">${overallAvg.toFixed(2)}</b></div>
-                    <div><span style="color:#888;">Favorable (≥3.5):</span> <b style="color:#4ade80;">${matchups.filter(m => m.avg >= 3.5).length}</b></div>
-                    <div><span style="color:#888;">Unfavorable (<3):</span> <b style="color:#ef4444;">${matchups.filter(m => m.avg < 3).length}</b></div>
-                </div>
-            `;
-            
-            matchupsSection.style.display = 'block';
         }
 
         function renderPlayers(containerId, players) {
