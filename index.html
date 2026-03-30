@@ -88,6 +88,12 @@
         .results-table .hk-side { color: #DE2910; }
         .results-table .opp-side { color: #00d4ff; }
         .score-preview { font-size: 0.75rem; color: #888; margin-top: 3px; }
+        .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .matrix-table th, .matrix-table td { padding: 6px 8px; text-align: center; border: 1px solid #334; }
+        .matrix-table th { background: #1a1a2e; color: #FFDE00; position: sticky; top: 0; }
+        .matrix-table .row-header { background: #1a1a2e; color: #eaeaea; font-weight: bold; }
+        .matrix-table .avg-col { background: #2a2a4e; color: #FFDE00; font-weight: bold; }
+        .matrix-table tr:hover td { background: rgba(255,255,255,0.05); }
         .result-box { text-align: center; padding: 20px; border-radius: 8px; }
         .result-box.hk { background: rgba(222,41,16,0.2); border: 2px solid #DE2910; }
         .result-box.opp { background: rgba(0,212,255,0.2); border: 2px solid #00d4ff; }
@@ -147,6 +153,22 @@
 
                 <hr style="border-color:#8892b0;margin:20px 0;">
 
+                <!-- Score Matrix -->
+                <div id="score-matrix-section" style="display:none;margin-bottom:20px;">
+                    <h3 style="color:#FFDE00;margin-bottom:10px;">📊 Score Matrix</h3>
+                    <div style="overflow-x:auto;">
+                        <table class="matrix-table" id="score-matrix-table">
+                            <thead id="matrix-head"></thead>
+                            <tbody id="matrix-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="matrix-legend" style="font-size:0.75rem;color:#888;margin-top:5px;">
+                        <span style="color:#4ade80;">■</span> ≥4.0 &nbsp; 
+                        <span style="color:#fbbf24;">■</span> 3.0-3.9 &nbsp; 
+                        <span style="color:#ef4444;">■</span> <3.0
+                    </div>
+                </div>
+
                 <div class="team-grid">
                     <div class="team-box hk">
                         <h3>🇭🇰 <span id="hk-name">Hong Kong</span></h3>
@@ -168,6 +190,16 @@
         <div class="page" id="page-round1">
             <div class="panel">
                 <div class="panel-title">⚔️ Round 1 - Attack/Defend</div>
+                
+                <!-- Score Matrix for Round pages -->
+                <div id="r1-matrix-section" style="display:none;margin-bottom:15px;">
+                    <details>
+                        <summary style="cursor:pointer;color:#FFDE00;">📊 Score Matrix</summary>
+                        <div style="overflow-x:auto;margin-top:10px;">
+                            <table class="matrix-table" id="r1-matrix-table"></table>
+                        </div>
+                    </details>
+                </div>
 
                 <div id="round1-content">
                     <p style="color:#8892b0;margin-bottom:15px;">Step 1: Select 1 Defender for each team. Step 2: Each team picks 2 Attackers. Step 3: Each Defender chooses their opponent.</p>
@@ -388,6 +420,7 @@
                 if (hkLoaded && oppLoaded) {
                     btn.textContent = 'LOADED ✓';
                     btn.style.background = '#4ade80';
+                    showScoreMatrix();
                 }
             };
             
@@ -441,10 +474,51 @@
             const btns = document.querySelectorAll('.phase-btn');
             if (btns[pageNum[pageId] - 1]) btns[pageNum[pageId] - 1].classList.add('active');
 
-            if (pageId === 'round1') initRound1();
-            if (pageId === 'round2') initRound2();
-            if (pageId === 'round3') initRound3();
+            if (pageId === 'round1') { initRound1(); showRoundMatrix('r1'); }
+            if (pageId === 'round2') { initRound2(); showRoundMatrix('r2'); }
+            if (pageId === 'round3') { initRound3(); showRoundMatrix('r3'); }
             if (pageId === 'results') showResults();
+        }
+        
+        // Render score matrix for round pages
+        function showRoundMatrix(round) {
+            if (!hkTeam || !oppTeam) return;
+            const section = document.getElementById(round + '-matrix-section');
+            const table = document.getElementById(round + '-matrix-table');
+            if (!section || !table) return;
+            
+            const hkNames = hkTeam.players.map(p => p.name);
+            const oppPlayers = oppTeam.players;
+            
+            function calcAvg(scores, names) {
+                let total = 0, count = 0;
+                names.forEach(n => { if (scores[n] !== undefined) { total += scores[n]; count++; } });
+                return count > 0 ? (total / count).toFixed(2) : '-';
+            }
+            
+            let html = '<thead><tr><th>Opp \\ HK</th>';
+            hkNames.forEach(n => html += `<th>${n}</th>`);
+            html += '<th class="avg-col">Avg</th></tr></thead><tbody>';
+            
+            let hkTotals = hkNames.map(() => 0), hkCounts = hkNames.map(() => 0);
+            
+            oppPlayers.forEach(opp => {
+                html += `<tr><td class="row-header">${opp.name}</td>`;
+                hkNames.forEach((hkName, i) => {
+                    const score = opp.scores?.[hkName];
+                    const color = score >= 4 ? '#4ade80' : score >= 3 ? '#fbbf24' : score !== undefined ? '#ef4444' : '#555';
+                    html += `<td style="color:${color};font-weight:bold;">${score !== undefined ? score.toFixed(1) : '-'}</td>`;
+                    if (score !== undefined) { hkTotals[i] += score; hkCounts[i]++; }
+                });
+                html += `<td class="avg-col">${calcAvg(opp.scores, hkNames)}</td></tr>`;
+            });
+            
+            html += '<tr><td class="row-header">Avg</td>';
+            hkNames.forEach((_, i) => { html += `<td class="avg-col">${hkCounts[i] > 0 ? (hkTotals[i]/hkCounts[i]).toFixed(2) : '-'}</td>`; });
+            html += '<td></td></tr></tbody>';
+            
+            table.innerHTML = html;
+            section.style.display = 'block';
         }
 
         function parseTeamXML(xml) {
@@ -479,6 +553,59 @@
             });
             
             return { name: teamName, players };
+        }
+
+        // Show score matrix: Opp players (rows) vs HK players (columns)
+        function showScoreMatrix() {
+            if (!hkTeam || !oppTeam) return;
+            
+            const matrixSection = document.getElementById('score-matrix-section');
+            const matrixHead = document.getElementById('matrix-head');
+            const matrixBody = document.getElementById('matrix-body');
+            
+            const hkNames = hkTeam.players.map(p => p.name);
+            const oppPlayers = oppTeam.players;
+            
+            // Calculate averages
+            function calcAvg(scores, names) {
+                let total = 0, count = 0;
+                names.forEach(n => {
+                    if (scores[n] !== undefined) { total += scores[n]; count++; }
+                });
+                return count > 0 ? (total / count).toFixed(2) : '-';
+            }
+            
+            // Header: HK names + Avg column
+            let headerHtml = '<tr><th>Opp \\ HK</th>';
+            hkNames.forEach(name => headerHtml += `<th>${name}</th>`);
+            headerHtml += '<th class="avg-col">Avg</th></tr>';
+            matrixHead.innerHTML = headerHtml;
+            
+            // Body: each Opp player row
+            let bodyHtml = '';
+            let hkTotals = hkNames.map(() => 0);
+            let hkCounts = hkNames.map(() => 0);
+            
+            oppPlayers.forEach((opp, oppIdx) => {
+                bodyHtml += `<tr><td class="row-header">${opp.name}<br><span style="font-size:0.7rem;color:#888;">${opp.army}</span></td>`;
+                hkNames.forEach((hkName, hkIdx) => {
+                    const score = opp.scores?.[hkName];
+                    const color = score >= 4 ? '#4ade80' : score >= 3 ? '#fbbf24' : score !== undefined ? '#ef4444' : '#555';
+                    bodyHtml += `<td style="color:${color};font-weight:bold;">${score !== undefined ? score.toFixed(1) : '-'}</td>`;
+                    if (score !== undefined) { hkTotals[hkIdx] += score; hkCounts[hkIdx]++; }
+                });
+                bodyHtml += `<td class="avg-col">${calcAvg(opp.scores, hkNames)}</td></tr>`;
+            });
+            
+            // Footer: HK average column
+            bodyHtml += '<tr><td class="row-header">Avg</td>';
+            hkNames.forEach((_, i) => {
+                bodyHtml += `<td class="avg-col">${hkCounts[i] > 0 ? (hkTotals[i] / hkCounts[i]).toFixed(2) : '-'}</td>`;
+            });
+            bodyHtml += '<td></td></tr>';
+            matrixBody.innerHTML = bodyHtml;
+            
+            matrixSection.style.display = 'block';
         }
 
         function renderPlayers(containerId, players) {
