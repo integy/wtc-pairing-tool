@@ -712,11 +712,12 @@
             rounds[1].done = true;
 
             // Track USED players so they can't be selected again
-            // Used = defender + both attackers (attacker + picked attacker)
-            const hkUsed = new Set([hkDef, rounds[1].pickhk, rounds[1].pickopp]);
-            const oppUsed = new Set([oppDef, rounds[1].pickopp, rounds[1].pickhk]);
+            // Match 1: HK defender (hkDef) vs Opp attacker (pickopp)
+            // Match 2: Opp defender (oppDef) vs HK attacker (pickhk)
+            const hkUsed = new Set([hkDef, rounds[1].pickhk]);
+            const oppUsed = new Set([oppDef, rounds[1].pickopp]);
 
-            // Track ALL unused players (for Round 3 auto-pairing)
+            // Track ALL unused players (for Round 2 pool)
             rounds[1].unusedHK = hkTeam.players.map((_, i) => i).filter(i => !hkUsed.has(i));
             rounds[1].unusedOpp = oppTeam.players.map((_, i) => i).filter(i => !oppUsed.has(i));
 
@@ -798,7 +799,7 @@
                     const attScore = p.scores?.[oppDefName];
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                 }).join('');
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -807,12 +808,12 @@
                     const attScore = p.scores?.[hkDefName];
                     const hkDefPlayer = hkTeam.players[hkDef];
                     const defScore = hkDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR2Att('opp', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR2Att('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                 }).join('');
             }
         }
 
-        function toggleR2Att(team, idx) {
+        function toggleR2Att(team, idx, btn) {
             // Force initialize
             rounds[2].hkAttackers = rounds[2].hkAttackers || [];
             rounds[2].oppAttackers = rounds[2].oppAttackers || [];
@@ -822,11 +823,11 @@
             
             if (existing > -1) {
                 arr.splice(existing, 1);
-                event.target.classList.remove('selected');
+                btn.classList.remove('selected');
             } else {
                 if (arr.length >= 2) { alert('Max 2!'); return; }
                 arr.push(idx);
-                event.target.classList.add('selected');
+                btn.classList.add('selected');
             }
 
             if (rounds[2].hkAttackers.length === 2 && rounds[2].oppAttackers.length === 2) {
@@ -834,7 +835,7 @@
             }
         }
 
-        function toggleR3Att(team, idx) {
+        function toggleR3Att(team, idx, btn) {
             rounds[3].hkAttackers = rounds[3].hkAttackers || [];
             rounds[3].oppAttackers = rounds[3].oppAttackers || [];
 
@@ -843,11 +844,11 @@
             
             if (existing > -1) {
                 arr.splice(existing, 1);
-                event.target.classList.remove('selected');
+                btn.classList.remove('selected');
             } else {
                 if (arr.length >= 2) { alert('Max 2!'); return; }
                 arr.push(idx);
-                event.target.classList.add('selected');
+                btn.classList.add('selected');
             }
 
             if (rounds[3].hkAttackers.length === 2 && rounds[3].oppAttackers.length === 2) {
@@ -952,11 +953,14 @@
             rounds[2].done = true;
 
             // Track USED players in Round 2
-            const usedInR2 = new Set([hkDef, oppDef, rounds[2].pickhk, rounds[2].pickopp]);
+            // Match 1: HK defender (hkDef) vs Opp attacker (pickopp)
+            // Match 2: Opp defender (oppDef) vs HK attacker (pickhk)
+            const hkUsedR2 = new Set([hkDef, rounds[2].pickhk]);
+            const oppUsedR2 = new Set([oppDef, rounds[2].pickopp]);
 
-            // Track remaining unused players for Round 3 (from R1 unused minus R2 used)
-            rounds[2].unusedHK = (rounds[2].poolHK || []).filter(i => !usedInR2.has(i));
-            rounds[2].unusedOpp = (rounds[2].poolOpp || []).filter(i => !usedInR2.has(i));
+            // Track remaining unused players for Round 3
+            rounds[2].unusedHK = (rounds[2].poolHK || []).filter(i => !hkUsedR2.has(i));
+            rounds[2].unusedOpp = (rounds[2].poolOpp || []).filter(i => !oppUsedR2.has(i));
 
             alert('Round 2 confirmed! Proceed to Round 3.');
             showPage('round3');
@@ -1035,7 +1039,7 @@
                     const attScore = p.scores?.[oppDefName];
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                 }).join('');
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1044,7 +1048,7 @@
                     const attScore = p.scores?.[hkDefName];
                     const hkDefPlayer = hkTeam.players[hkDef];
                     const defScore = hkDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR3Att('opp', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR3Att('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                 }).join('');
             }
         }
