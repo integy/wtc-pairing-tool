@@ -1185,7 +1185,13 @@
             // Unused players return to pool for next round
             rounds[2].unusedHK = (rounds[2].poolHK || []).filter(i => !hkUsedR2.has(i));
             rounds[2].unusedOpp = (rounds[2].poolOpp || []).filter(i => !oppUsedR2.has(i));
-
+            
+            // Debug R2
+            const r2UnusedHK = rounds[2].unusedHK || [];
+            const r2UnusedOpp = rounds[2].unusedOpp || [];
+            const hkNames = r2UnusedHK.map(i => hkTeam.players[i]?.name || i).join(',');
+            alert(`R2 Debug:\npoolHK=${(rounds[2].poolHK||[]).length}\nunusedHK=${r2UnusedHK.length} (${hkNames})\nR3 will have ${r2UnusedHK.length} HK vs ${r2UnusedOpp.length} Opp`);
+            
             alert('Round 2 confirmed! Proceed to Round 3.');
             showPage('round3');
         }
@@ -1398,8 +1404,10 @@
             const lastHK = fullPoolHK.filter(i => !allUsedHK.has(i));
             const lastOpp = fullPoolOpp.filter(i => !allUsedOpp.has(i));
             
-            // Debug: alert counts
-            alert(`R3 Debug:\npoolHK=${fullPoolHK.length}, unpicked=${unpickedHK.length}, last=${lastHK.length}\nTotal R3 matches will be: ${2 + unpickedHK.length + lastHK.length}`);
+            // Debug: alert counts with names
+            const unpickNames = unpickedHK.map(i => hkTeam.players[i]?.name || i).join(',');
+            const lastNames = lastHK.map(i => hkTeam.players[i]?.name || i).join(',');
+            alert(`R3 Debug:\nfullPoolHK=${fullPoolHK.length}\nunpickedHK=${unpickedHK.length} (${unpickNames})\nlastHK=${lastHK.length} (${lastNames})\nTotal R3 matches will be: ${2 + unpickedHK.length + lastHK.length}`);
             
             // Auto-pair unpicked attackers
             for (let i = 0; i < unpickedHK.length && i < unpickedOpp.length; i++) {
