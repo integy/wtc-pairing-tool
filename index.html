@@ -1375,6 +1375,19 @@
             const oppDef = rounds[3].oppDefender;
             const hkAtts = rounds[3].hkAttackers || [];
             const oppAtts = rounds[3].oppAttackers || [];
+            
+            // Debug: show all states
+            const fullPoolHK = rounds[2].unusedHK || [];
+            const hkDefName = hkTeam.players[hkDef]?.name;
+            const hkAttsNames = hkAtts.map(i => hkTeam.players[i]?.name).join(',');
+            const pickhkName = hkTeam.players[rounds[3].pickhk]?.name;
+            const poolHKnames = fullPoolHK.map(i => hkTeam.players[i]?.name).join(',');
+            
+            const hkPickedSet = new Set([rounds[3].pickhk]);
+            const unpickedHK = hkAtts.filter(i => !hkPickedSet.has(i));
+            const unpickedNames = unpickedHK.map(i => hkTeam.players[i]?.name).join(',');
+            
+            alert(`confirmRound3:\npoolHK=${fullPoolHK.length} (${poolHKnames})\nhkDef=${hkDef} (${hkDefName})\nhkAtts=${hkAtts.length} (${hkAttsNames})\npickhk=${rounds[3].pickhk} (${pickhkName})\nunpickedHK=${unpickedHK.length} (${unpickedNames})`);
 
             // Match 1: HK Defender vs Opp picked attacker (picked by Opp defender)
             allMatches.push({
