@@ -1372,6 +1372,17 @@
                 opp: oppDef, oppRole: 'defender'
             });
 
+            // DEBUG: Show R3 state before auto-pair
+            const dbg_poolHK = rounds[2].unusedHK || [];
+            const dbg_poolNames = dbg_poolHK.map(i => hkTeam.players[i]?.name).join(',');
+            const dbg_pickedSet = new Set([rounds[3].pickhk]);
+            const dbg_unpickedHK = hkAtts.filter(i => !dbg_pickedSet.has(i));
+            const dbg_unpickedNames = dbg_unpickedHK.map(i => hkTeam.players[i]?.name).join(',');
+            const dbg_allUsed = new Set([hkDef, rounds[3].pickhk, ...dbg_unpickedHK]);
+            const dbg_lastHK = dbg_poolHK.filter(i => !dbg_allUsed.has(i));
+            const dbg_lastNames = dbg_lastHK.map(i => hkTeam.players[i]?.name).join(',');
+            alert(`R3:\npool=${dbg_poolNames}\nhkAtts=${hkAtts.map(i=>hkTeam.players[i]?.name).join(',')}\nunpicked=${dbg_unpickedNames}\nlast=${dbg_lastNames}`);
+
             // Remaining attackers (not picked) auto-pair
             const hkPickedSet = new Set([rounds[3].pickhk]);
             const oppPickedSet = new Set([rounds[3].pickopp]);
