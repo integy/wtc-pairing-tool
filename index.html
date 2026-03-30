@@ -1071,12 +1071,12 @@
                 arr.splice(existing, 1);
                 btn.classList.remove('selected');
             } else {
-                if (arr.length >= 1) { alert('R3: Select only 1 attacker!'); return; }
+                if (arr.length >= 2) { alert('Max 2 attackers!'); return; }
                 arr.push(idx);
                 btn.classList.add('selected');
             }
 
-            if (rounds[3].hkAttackers.length === 1 && rounds[3].oppAttackers.length === 1) {
+            if (rounds[3].hkAttackers.length === 2 && rounds[3].oppAttackers.length === 2) {
                 showR3Pairing();
             }
         }
@@ -1197,7 +1197,7 @@
 
             const content = document.getElementById('round3-content');
             content.innerHTML = `
-                <p style="color:#8892b0;margin-bottom:15px;">Round 3: Select Defender then 1 Attacker. Remaining players will auto-pair.</p>
+                <p style="color:#8892b0;margin-bottom:15px;">Round 3: Select Defender + 2 Attackers. 1 picked vs opponent, others auto-pair.</p>
                 <p style="color:#FFDE00;margin-bottom:15px;">Available: HK ${poolHK.length} players, Opp ${poolOpp.length} players</p>
                 
                 <div style="margin-bottom:20px;">
@@ -1355,32 +1355,50 @@
 
             const hkDef = rounds[3].hkDefender;
             const oppDef = rounds[3].oppDefender;
+            const hkAtts = rounds[3].hkAttackers || [];
+            const oppAtts = rounds[3].oppAttackers || [];
 
-            // Match 1: HK Defender vs Opp picked attacker
+            // Match 1: HK Defender vs Opp picked attacker (picked by Opp defender)
             allMatches.push({
                 round: 3,
                 hk: hkDef, hkRole: 'defender',
                 opp: rounds[3].pickopp, oppRole: 'attacker'
             });
 
-            // Match 2: Opp Defender vs HK picked attacker
+            // Match 2: Opp Defender vs HK picked attacker (picked by HK defender)
             allMatches.push({
                 round: 3,
                 hk: rounds[3].pickhk, hkRole: 'attacker',
                 opp: oppDef, oppRole: 'defender'
             });
 
-            // Auto-pair remaining unselected attackers
-            const hkUsedInR3 = new Set([hkDef, rounds[3].pickhk]);
-            const oppUsedInR3 = new Set([oppDef, rounds[3].pickopp]);
+            // Remaining attackers (not picked) auto-pair
+            const hkPickedSet = new Set([rounds[3].pickhk]);
+            const oppPickedSet = new Set([rounds[3].pickopp]);
             
-            // Remaining from R3 pool
-            const remainingHK = (rounds[3].poolHK || []).filter(i => !hkUsedInR3.has(i));
-            const remainingOpp = (rounds[3].poolOpp || []).filter(i => !oppUsedInR3.has(i));
+            const remainingHK = hkAtts.filter(i => !hkPickedSet.has(i));
+            const remainingOpp = oppAtts.filter(i => !oppPickedSet.has(i));
             
-            // Auto-pair remaining players
+            // Auto-pair remaining attackers
             remainingHK.forEach((hki, i) => {
                 const oppi = remainingOpp[i];
+                if (oppi !== undefined) {
+                    allMatches.push({
+                        round: 3,
+                        hk: hki, hkRole: 'auto-paired',
+                        opp: oppi, oppRole: 'auto-paired'
+                    });
+                }
+            });
+
+            // Last remaining players auto-pair
+            const hkUsedSet = new Set([hkDef, rounds[3].pickhk, ...remainingHK]);
+            const oppUsedSet = new Set([oppDef, rounds[3].pickopp, ...remainingOpp]);
+            const lastHK = (rounds[3].poolHK || []).filter(i => !hkUsedSet.has(i));
+            const lastOpp = (rounds[3].poolOpp || []).filter(i => !oppUsedSet.has(i));
+            
+            lastHK.forEach((hki, i) => {
+                const oppi = lastOpp[i];
                 if (oppi !== undefined) {
                     allMatches.push({
                         round: 3,
