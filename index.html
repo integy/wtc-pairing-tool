@@ -193,12 +193,10 @@
                 
                 <!-- Score Matrix for Round pages -->
                 <div id="r1-matrix-section" style="display:none;margin-bottom:15px;">
-                    <details>
-                        <summary style="cursor:pointer;color:#FFDE00;">📊 Score Matrix</summary>
-                        <div style="overflow-x:auto;margin-top:10px;">
-                            <table class="matrix-table" id="r1-matrix-table"></table>
-                        </div>
-                    </details>
+                    <h4 style="color:#FFDE00;margin-bottom:10px;">📊 Score Matrix</h4>
+                    <div style="overflow-x:auto;">
+                        <table class="matrix-table" id="r1-matrix-table"></table>
+                    </div>
                 </div>
 
                 <div id="round1-content">
@@ -474,21 +472,25 @@
             const btns = document.querySelectorAll('.phase-btn');
             if (btns[pageNum[pageId] - 1]) btns[pageNum[pageId] - 1].classList.add('active');
 
-            if (pageId === 'round1') { initRound1(); showRoundMatrix('r1'); }
-            if (pageId === 'round2') { initRound2(); showRoundMatrix('r2'); }
-            if (pageId === 'round3') { initRound3(); showRoundMatrix('r3'); }
+            if (pageId === 'round1') { initRound1(); showRoundMatrix('r1', rounds[1].poolHK, rounds[1].poolOpp); }
+            if (pageId === 'round2') { initRound2(); showRoundMatrix('r2', rounds[2].poolHK, rounds[2].poolOpp); }
+            if (pageId === 'round3') { initRound3(); showRoundMatrix('r3', rounds[3].poolHK, rounds[3].poolOpp); }
             if (pageId === 'results') showResults();
         }
         
-        // Render score matrix for round pages
-        function showRoundMatrix(round) {
+        // Render score matrix for round pages (only remaining players)
+        function showRoundMatrix(round, poolHK, poolOpp) {
             if (!hkTeam || !oppTeam) return;
             const section = document.getElementById(round + '-matrix-section');
             const table = document.getElementById(round + '-matrix-table');
             if (!section || !table) return;
             
-            const hkNames = hkTeam.players.map(p => p.name);
-            const oppPlayers = oppTeam.players;
+            // Use remaining pool or all players
+            const remainingHK = poolHK || hkTeam.players.map((_, i) => i);
+            const remainingOpp = poolOpp || oppTeam.players.map((_, i) => i);
+            
+            const hkNames = remainingHK.map(i => hkTeam.players[i].name);
+            const oppPlayers = remainingOpp.map(i => oppTeam.players[i]);
             
             function calcAvg(scores, names) {
                 let total = 0, count = 0;
