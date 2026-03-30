@@ -361,64 +361,47 @@
                 return;
             }
             
-            preview.innerHTML = '⏳ Loading preview...';
-            loadBtn.disabled = false;
+            // Use embedded TEAMS data directly for preview
+            const teamData = TEAMS[select.value];
+            if (teamData) {
+                const hkPlayers = ['Eric', 'Terrence', 'Kris', 'Ivan', 'Jireh', 'Kevin', 'Quentin', 'Gabrielle'];
+                preview.innerHTML = teamData.players.map(p => {
+                    const scores = hkPlayers.map(hk => {
+                        const score = p.scores?.[hk];
+                        return score !== undefined ? `${score}` : '-';
+                    }).join('|');
+                    return `${p.name} (${p.army})<br><span style="font-size:0.65rem;color:#888;">vs HK: ${scores}</span>`;
+                }).join('<br>');
+            }
             
-            fetch(select.value)
-                .then(r => r.text())
-                .then(xml => {
-                    const data = parseTeamXML(xml);
-                    // Show players with scores if available
-                    const hkPlayers = ['Eric', 'Terrence', 'Kris', 'Ivan', 'Jireh', 'Kevin', 'Quentin', 'Gabrielle'];
-                    preview.innerHTML = data.players.map(p => {
-                        const scores = hkPlayers.map(hk => {
-                            const score = p.scores?.[hk];
-                            return score !== undefined ? `${score}` : '-';
-                        }).join('|');
-                        return `${p.name} (${p.army})<br><span style="font-size:0.65rem;color:#888;">vs HK: ${scores}</span>`;
-                    }).join('<br>');
-                    
-                    // Store parsed data for later use
-                    if (team === 'hk') {
-                        window._hkTeamData = data;
-                    } else {
-                        window._oppTeamData = data;
-                    }
-                })
-                .catch(e => {
-                    preview.innerHTML = '<span style="color:#ef4444;">Error loading</span>';
-                });
+            loadBtn.disabled = false;
         }
 
         function loadSelectedTeams() {
             const hkKey = document.getElementById('hk-team-select').value;
             const oppKey = document.getElementById('opp-team-select').value;
             
-            let loaded = 0;
-            const checkDone = () => {
-                loaded++;
-                if (loaded >= 2) {
-                    document.getElementById('load-btn').textContent = 'LOADED ✓';
-                    document.getElementById('load-btn').style.background = '#4ade80';
-                }
-            };
+            let hkLoaded = false, oppLoaded = false;
             
             if (hkKey && TEAMS[hkKey]) {
                 hkTeam = TEAMS[hkKey];
                 document.getElementById('hk-name').textContent = hkTeam.name;
                 renderPlayers('hk-players', hkTeam.players);
-                checkDone();
-            } else {
-                checkDone();
+                hkLoaded = true;
             }
             
             if (oppKey && TEAMS[oppKey]) {
                 oppTeam = TEAMS[oppKey];
                 document.getElementById('opp-name').textContent = oppTeam.name;
                 renderPlayers('opp-players', oppTeam.players);
-                checkDone();
-            } else {
-                checkDone();
+                oppLoaded = true;
+            }
+            
+            // Update button immediately on first successful load
+            if (hkLoaded || oppLoaded) {
+                const btn = document.getElementById('load-btn');
+                btn.textContent = 'LOADED ✓';
+                btn.style.background = '#4ade80';
             }
         }
 
