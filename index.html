@@ -543,14 +543,11 @@
             return ` <span style="color:${color}">(${score.toFixed(1)})</span>`;
         }
         
-        // Show both scores: attacker vs defender AND defender vs attacker
-        function getScoreDisplayBoth(attackerScore, defenderScore) {
-            if (attackerScore === undefined && defenderScore === undefined) return '';
-            const c1 = attackerScore !== undefined ? (attackerScore >= 4 ? '#4ade80' : attackerScore <= 2 ? '#ef4444' : '#fbbf24') : '#888';
-            const c2 = defenderScore !== undefined ? (defenderScore >= 4 ? '#4ade80' : defenderScore <= 2 ? '#ef4444' : '#fbbf24') : '#888';
-            const s1 = attackerScore !== undefined ? attackerScore.toFixed(1) : '-';
-            const s2 = defenderScore !== undefined ? defenderScore.toFixed(1) : '-';
-            return ` <span style="color:${c1}">[${s1}</span>:<span style="color:${c2}">${s2}]</span>`;
+        // Show opponent's score vs attacker
+        function getScoreDisplayOpp(oppScore) {
+            if (oppScore === undefined) return '';
+            const color = oppScore >= 4 ? '#4ade80' : oppScore <= 2 ? '#ef4444' : '#fbbf24';
+            return ` <span style="color:${color}">[${oppScore.toFixed(1)}]</span>`;
         }
 
         function showR1Attackers() {
@@ -568,7 +565,7 @@
                 const attScore = p.scores?.[oppDefName];
                 const oppDefPlayer = oppTeam.players[oppDef];
                 const defScore = oppDefPlayer?.scores?.[p.name];
-                return `<button class="pick-btn" data-team="hk" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                return `<button class="pick-btn" data-team="hk" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
             }).join('');
 
             // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -578,7 +575,7 @@
                 const attScore = p.scores?.[hkDefName];
                 const hkDefPlayer = hkTeam.players[hkDef];
                 const defScore = hkDefPlayer?.scores?.[p.name];
-                return `<button class="pick-btn" data-team="opp" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                return `<button class="pick-btn" data-team="opp" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
             }).join('');
         }
 
@@ -637,7 +634,7 @@
                                 const attScore = p.scores?.[hkDefName];
                                 const hkDefPlayer = hkTeam.players[hkDef];
                                 const defScore = hkDefPlayer?.scores?.[p.name];
-                                return `<button class="pick-btn" onclick="r1PickAtt('hk', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                                return `<button class="pick-btn" onclick="r1PickAtt('hk', ${i})">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -664,7 +661,7 @@
                                 const attScore = p.scores?.[oppDefName];
                                 const oppDefPlayer = oppTeam.players[oppDef];
                                 const defScore = oppDefPlayer?.scores?.[p.name];
-                                return `<button class="pick-btn" onclick="r1PickAtt('opp', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                                return `<button class="pick-btn" onclick="r1PickAtt('opp', ${i})">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -798,7 +795,7 @@
                     const attScore = p.scores?.[oppDefName];
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i})">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
                 }).join('');
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -807,7 +804,7 @@
                     const attScore = p.scores?.[hkDefName];
                     const hkDefPlayer = hkTeam.players[hkDef];
                     const defScore = hkDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR2Att('opp', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR2Att('opp', ${i})">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
                 }).join('');
             }
         }
@@ -1035,7 +1032,7 @@
                     const attScore = p.scores?.[oppDefName];
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i})">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
                 }).join('');
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1044,7 +1041,7 @@
                     const attScore = p.scores?.[hkDefName];
                     const hkDefPlayer = hkTeam.players[hkDef];
                     const defScore = hkDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR3Att('opp', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR3Att('opp', ${i})">${p.name}${getScoreDisplayOpp(defScore)}</button>`;
                 }).join('');
             }
         }
