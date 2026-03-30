@@ -259,65 +259,23 @@
     </div>
 
     <script>
-        // Team Data
-        const TEAMS = {
-            hk: {
-                name: 'Hong Kong Team',
-                players: [
-                    { name: 'Chan, Marcus', army: 'Custodes' },
-                    { name: 'Lee, Kevin', army: 'Death Guard' },
-                    { name: 'Ng, Derek', army: 'Tyranids' },
-                    { name: 'Wong, Jason', army: 'Space Marines' },
-                    { name: 'Tse, Adrian', army: 'Drukhari' },
-                    { name: 'Fok, Clement', army: 'Grey Knights' },
-                    { name: 'Cheung, Ryan', army: 'Aeldari' },
-                    { name: 'Ho, Vincent', army: 'Orks' }
-                ]
-            },
-            japan: {
-                name: 'Japan Team',
-                players: [
-                    { name: 'Tanaka, Hiroshi', army: 'Imperial Knights' },
-                    { name: 'Yamamoto, Kenji', army: 'Adeptus Custodes' },
-                    { name: 'Suzuki, Takeshi', army: 'Thousand Sons' },
-                    { name: 'Watanabe, Yuki', army: 'Dark Angels' },
-                    { name: 'Okada, Shinji', army: 'Tau Empire' },
-                    { name: 'Hayashi, Ryo', army: 'Chaos Space Marines' },
-                    { name: 'Kimura, Daichi', army: 'Sisters of Battle' },
-                    { name: 'Nakamura, Kaito', army: 'Votann' }
-                ]
-            },
-            france: {
-                name: 'France Team',
-                players: [
-                    { name: 'Dubois, Jean-Luc', army: 'Leagues of Votann' },
-                    { name: 'Martin, Pierre', army: 'Aeldari' },
-                    { name: 'Bernard, Olivier', army: 'Imperial Guard' },
-                    { name: 'Petit, Antoine', army: 'Drukhari' },
-                    { name: 'Moreau, Nicolas', army: 'World Eaters' },
-                    { name: 'Laurent, Francois', army: 'Black Templars' },
-                    { name: 'Simon, Thomas', army: 'Orks' },
-                    { name: 'Roux, Guillaume', army: 'Genestealer Cults' }
-                ]
-            },
-            sample: {
-                name: 'Sample Team',
-                players: [
-                    { name: 'Player 1', army: 'Space Marines' },
-                    { name: 'Player 2', army: 'Tyranids' },
-                    { name: 'Player 3', army: 'Orks' },
-                    { name: 'Player 4', army: 'Necrons' },
-                    { name: 'Player 5', army: 'Tau' },
-                    { name: 'Player 6', army: 'Eldar' },
-                    { name: 'Player 7', army: 'Dark Eldar' },
-                    { name: 'Player 8', army: 'Chaos' }
-                ]
-            }
+        // Team URLs (GitHub Pages)
+        const TEAM_URLS = {
+            hk: 'teams/hk-team.xml',
+            japan: 'teams/japan-team.xml',
+            france: 'teams/france-team.xml'
+        };
+        
+        // Team display names
+        const TEAM_NAMES = {
+            hk: 'Hong Kong',
+            japan: 'Japan',
+            france: 'France'
         };
 
         // State
-        let hkTeam = TEAMS.hk;
-        let oppTeam = TEAMS.sample;
+        let hkTeam = null;
+        let oppTeam = null;
         let currentRound = 1;
         let rounds = { 1: {}, 2: {}, 3: {} };
         let allMatches = [];
@@ -339,10 +297,9 @@
             hkSelect.innerHTML = '<option value="">-- Select Team --</option>';
             oppSelect.innerHTML = '<option value="">-- Select Team --</option>';
             
-            // Use embedded TEAMS data directly
-            Object.keys(TEAMS).forEach(key => {
-                const team = TEAMS[key];
-                const displayName = team.name;
+            // Populate from TEAM_URLS
+            Object.keys(TEAM_URLS).forEach(key => {
+                const displayName = TEAM_NAMES[key] || key;
                 const opt1 = new Option(displayName, key);
                 const opt2 = new Option(displayName, key);
                 hkSelect.add(opt1);
@@ -361,20 +318,35 @@
                 return;
             }
             
-            // Use embedded TEAMS data directly for preview
-            const teamData = TEAMS[select.value];
-            if (teamData) {
-                const hkPlayers = ['Eric', 'Terrence', 'Kris', 'Ivan', 'Jireh', 'Kevin', 'Quentin', 'Gabrielle'];
-                preview.innerHTML = teamData.players.map(p => {
-                    const scores = hkPlayers.map(hk => {
-                        const score = p.scores?.[hk];
-                        return score !== undefined ? `${score}` : '-';
-                    }).join('|');
-                    return `${p.name} (${p.army})<br><span style="font-size:0.65rem;color:#888;">vs HK: ${scores}</span>`;
-                }).join('<br>');
-            }
-            
+            preview.innerHTML = '⏳ Loading preview...';
             loadBtn.disabled = false;
+            
+            // Fetch XML from GitHub Pages
+            const url = TEAM_URLS[select.value];
+            fetch(url)
+                .then(r => r.text())
+                .then(xml => {
+                    const data = parseTeamXML(xml);
+                    // Get HK player names from loaded HK team or use data's own players
+                    const hkPlayers = hkTeam ? hkTeam.players.map(p => p.name) : data.players.map(p => p.name);
+                    preview.innerHTML = data.players.map(p => {
+                        const scores = hkPlayers.map(hk => {
+                            const score = p.scores?.[hk];
+                            return score !== undefined ? `${score}` : '-';
+                        }).join('|');
+                        return `${p.name} (${p.army})<br><span style="font-size:0.65rem;color:#888;">vs HK: ${scores}</span>`;
+                    }).join('<br>');
+                    
+                    // Store parsed data for later use
+                    if (team === 'hk') {
+                        window._hkTeamData = data;
+                    } else {
+                        window._oppTeamData = data;
+                    }
+                })
+                .catch(e => {
+                    preview.innerHTML = '<span style="color:#ef4444;">Error loading</span>';
+                });
         }
 
         function loadSelectedTeams() {
@@ -382,26 +354,55 @@
             const oppKey = document.getElementById('opp-team-select').value;
             
             let hkLoaded = false, oppLoaded = false;
+            const btn = document.getElementById('load-btn');
+            btn.textContent = '⏳ Loading...';
+            btn.style.background = '#fbbf24';
             
-            if (hkKey && TEAMS[hkKey]) {
-                hkTeam = TEAMS[hkKey];
-                document.getElementById('hk-name').textContent = hkTeam.name;
-                renderPlayers('hk-players', hkTeam.players);
+            const checkDone = () => {
+                if (hkLoaded && oppLoaded) {
+                    btn.textContent = 'LOADED ✓';
+                    btn.style.background = '#4ade80';
+                }
+            };
+            
+            // Load HK team
+            if (hkKey && TEAM_URLS[hkKey]) {
+                fetch(TEAM_URLS[hkKey])
+                    .then(r => r.text())
+                    .then(xml => {
+                        hkTeam = parseTeamXML(xml);
+                        document.getElementById('hk-name').textContent = hkTeam.name;
+                        renderPlayers('hk-players', hkTeam.players);
+                        hkLoaded = true;
+                        checkDone();
+                    })
+                    .catch(e => {
+                        btn.textContent = 'Error!';
+                        btn.style.background = '#ef4444';
+                    });
+            } else {
                 hkLoaded = true;
+                checkDone();
             }
             
-            if (oppKey && TEAMS[oppKey]) {
-                oppTeam = TEAMS[oppKey];
-                document.getElementById('opp-name').textContent = oppTeam.name;
-                renderPlayers('opp-players', oppTeam.players);
+            // Load Opponent team
+            if (oppKey && TEAM_URLS[oppKey]) {
+                fetch(TEAM_URLS[oppKey])
+                    .then(r => r.text())
+                    .then(xml => {
+                        oppTeam = parseTeamXML(xml);
+                        document.getElementById('opp-name').textContent = oppTeam.name;
+                        renderPlayers('opp-players', oppTeam.players);
+                        oppLoaded = true;
+                        checkDone();
+                    })
+                    .catch(e => {
+                        btn.textContent = 'Error!';
+                        btn.style.background = '#ef4444';
+                    });
+            } else {
                 oppLoaded = true;
-            }
-            
-            // Update button immediately on first successful load
-            if (hkLoaded || oppLoaded) {
-                const btn = document.getElementById('load-btn');
-                btn.textContent = 'LOADED ✓';
-                btn.style.background = '#4ade80';
+                checkDone();
             }
         }
 
@@ -430,12 +431,12 @@
             teamEl.querySelectorAll('player').forEach((p, i) => {
                 if (i >= 8) return;
                 
-                // Parse scores
+                // Parse scores (XML uses 'opponent' attribute)
                 const scores = {};
                 p.querySelectorAll('score').forEach(s => {
-                    const playerName = s.getAttribute('player');
-                    const score = parseInt(s.textContent) || 3;
-                    scores[playerName] = score;
+                    const opponentName = s.getAttribute('opponent');
+                    const score = parseFloat(s.textContent) || 3;
+                    scores[opponentName] = score;
                 });
                 
                 // Get armyList (can be in armyList or list tags)
@@ -457,7 +458,8 @@
         function renderPlayers(containerId, players) {
             const container = document.getElementById(containerId);
             const isOpp = containerId === 'opp-players';
-            const hkPlayers = ['Eric', 'Terrence', 'Kris', 'Ivan', 'Jireh', 'Kevin', 'Quentin', 'Gabrielle'];
+            // Get HK player names dynamically from loaded team
+            const hkPlayers = hkTeam ? hkTeam.players.map(p => p.name) : [];
             
             container.innerHTML = players.map((p, i) => {
                 // Show scores if opponent team has them
