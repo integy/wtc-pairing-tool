@@ -1376,37 +1376,48 @@
             const hkPickedSet = new Set([rounds[3].pickhk]);
             const oppPickedSet = new Set([rounds[3].pickopp]);
             
-            const remainingHK = hkAtts.filter(i => !hkPickedSet.has(i));
-            const remainingOpp = oppAtts.filter(i => !oppPickedSet.has(i));
+            const unpickedHK = hkAtts.filter(i => !hkPickedSet.has(i));
+            const unpickedOpp = oppAtts.filter(i => !oppPickedSet.has(i));
             
-            // Auto-pair remaining attackers
-            remainingHK.forEach((hki, i) => {
-                const oppi = remainingOpp[i];
-                if (oppi !== undefined) {
-                    allMatches.push({
-                        round: 3,
-                        hk: hki, hkRole: 'auto-paired',
-                        opp: oppi, oppRole: 'auto-paired'
-                    });
-                }
-            });
+            // Auto-pair unpicked attackers (1 vs 1)
+            for (let i = 0; i < unpickedHK.length && i < unpickedOpp.length; i++) {
+                allMatches.push({
+                    round: 3,
+                    hk: unpickedHK[i], hkRole: 'auto-paired',
+                    opp: unpickedOpp[i], oppRole: 'auto-paired'
+                });
+            }
 
-            // Last remaining players auto-pair
-            const hkUsedSet = new Set([hkDef, rounds[3].pickhk, ...remainingHK]);
-            const oppUsedSet = new Set([oppDef, rounds[3].pickopp, ...remainingOpp]);
-            const lastHK = (rounds[3].poolHK || []).filter(i => !hkUsedSet.has(i));
-            const lastOpp = (rounds[3].poolOpp || []).filter(i => !oppUsedSet.has(i));
+            // Last remaining players from full pool (defenders already excluded from pool)
+            const allUsedHK = new Set([hkDef, rounds[3].pickhk, ...unpickedHK]);
+            const allUsedOpp = new Set([oppDef, rounds[3].pickopp, ...unpickedOpp]);
             
-            lastHK.forEach((hki, i) => {
-                const oppi = lastOpp[i];
-                if (oppi !== undefined) {
-                    allMatches.push({
-                        round: 3,
-                        hk: hki, hkRole: 'auto-paired',
-                        opp: oppi, oppRole: 'auto-paired'
-                    });
-                }
-            });
+            // Get all original pool players and filter out used ones
+            const fullPoolHK = rounds[2].unusedHK || [];
+            const fullPoolOpp = rounds[2].unusedOpp || [];
+            const lastHK = fullPoolHK.filter(i => !allUsedHK.has(i));
+            const lastOpp = fullPoolOpp.filter(i => !allUsedOpp.has(i));
+            
+            // Debug: alert counts
+            alert(`R3 Debug:\npoolHK=${fullPoolHK.length}, unpicked=${unpickedHK.length}, last=${lastHK.length}\nTotal R3 matches will be: ${2 + unpickedHK.length + lastHK.length}`);
+            
+            // Auto-pair unpicked attackers
+            for (let i = 0; i < unpickedHK.length && i < unpickedOpp.length; i++) {
+                allMatches.push({
+                    round: 3,
+                    hk: unpickedHK[i], hkRole: 'auto-paired',
+                    opp: unpickedOpp[i], oppRole: 'auto-paired'
+                });
+            }
+            
+            // Auto-pair last remaining
+            for (let i = 0; i < lastHK.length && i < lastOpp.length; i++) {
+                allMatches.push({
+                    round: 3,
+                    hk: lastHK[i], hkRole: 'auto-paired',
+                    opp: lastOpp[i], oppRole: 'auto-paired'
+                });
+            }
 
             rounds[3].done = true;
             alert('Round 3 confirmed! Total matches: ' + allMatches.length);
