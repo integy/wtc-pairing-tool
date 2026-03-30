@@ -938,10 +938,9 @@
             rounds[1].done = true;
 
             // Track USED players so they can't be selected again
-            // Match 1: HK defender (hkDef) vs Opp attacker (pickopp)
-            // Match 2: Opp defender (oppDef) vs HK attacker (pickhk)
-            const hkUsed = new Set([hkDef, rounds[1].pickhk]);
-            const oppUsed = new Set([oppDef, rounds[1].pickopp]);
+            // Each round uses: 1 defender + 2 attackers per team
+            const hkUsed = new Set([hkDef, ...hkAtts]);
+            const oppUsed = new Set([oppDef, ...oppAtts]);
 
             // Track ALL unused players (for Round 2 pool)
             rounds[1].unusedHK = hkTeam.players.map((_, i) => i).filter(i => !hkUsed.has(i));
@@ -1178,11 +1177,9 @@
 
             rounds[2].done = true;
 
-            // Track USED players in Round 2
-            // Match 1: HK defender (hkDef) vs Opp attacker (pickopp)
-            // Match 2: Opp defender (oppDef) vs HK attacker (pickhk)
-            const hkUsedR2 = new Set([hkDef, rounds[2].pickhk]);
-            const oppUsedR2 = new Set([oppDef, rounds[2].pickopp]);
+            // Track USED players in Round 2 (1 defender + 2 attackers per team)
+            const hkUsedR2 = new Set([hkDef, ...hkAtts]);
+            const oppUsedR2 = new Set([oppDef, ...oppAtts]);
 
             // Track remaining unused players for Round 3
             rounds[2].unusedHK = (rounds[2].poolHK || []).filter(i => !hkUsedR2.has(i));
