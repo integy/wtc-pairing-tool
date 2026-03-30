@@ -815,10 +815,6 @@
         function getTopStar(pool, defenderName, idx) {
             if (!pool || pool.length < 2) return '';
             const top2 = getTopAttackers(pool, defenderName);
-            // DEBUG
-            const p1 = hkTeam.players[top2[0]]?.name;
-            const p2 = hkTeam.players[top2[1]]?.name;
-            alert(`getTopStar: pool=${pool.join(',')}, def=${defenderName}, top2=${p1},${p2}, idx=${idx}, star=${top2.includes(idx)}`);
             return top2.includes(idx) ? ' ⭐' : '';
         }
 
@@ -865,8 +861,7 @@
             const arr = team === 'hk' ? rounds[1].hkAttackers : rounds[1].oppAttackers;
             
             const existingIdx = arr.indexOf(idx);
-            // DEBUG
-            alert(`toggleR1Att: team=${team}, idx=${idx}, existingIdx=${existingIdx}, arr=[${arr.join(',')}]`);
+            console.log(`toggleR1Att: team=${team}, idx=${idx}, existingIdx=${existingIdx}, arr=[${arr.join(',')}]`);
             
             if (existingIdx > -1) {
                 arr.splice(existingIdx, 1);
@@ -880,7 +875,7 @@
                 btn.classList.add('selected');
             }
 
-            alert(`After toggle: arr=[${arr.join(',')}], hkAtts=${rounds[1].hkAttackers?.length}, oppAtts=${rounds[1].oppAttackers?.length}`);
+            console.log(`After toggle: arr=[${arr.join(',')}]`);
 
             if (rounds[1].hkAttackers.length === 2 && rounds[1].oppAttackers.length === 2) {
                 showR1Pairing();
