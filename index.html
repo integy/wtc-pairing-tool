@@ -779,48 +779,39 @@
             return ` <span style="color:${c1}">[${s1}</span>:<span style="color:${c2}">${s2}]</span>`;
         }
 
-        // Maximin strategy: find best pair of attackers
-        // For HK attackers against Opp defender, maximize the minimum score
-        function findMaximinAttackers(attackerPool, defenderName, team) {
-            if (attackerPool.length < 2) return null;
-            
-            let bestPair = null;
-            let bestMinScore = -Infinity;
-            
-            // Try all pairs
-            for (let i = 0; i < attackerPool.length; i++) {
-                for (let j = i + 1; j < attackerPool.length; j++) {
-                    const p1 = attackerPool[i];
-                    const p2 = attackerPool[j];
-                    const score1 = p1.scores?.[defenderName];
-                    const score2 = p2.scores?.[defenderName];
-                    
-                    if (score1 !== undefined && score2 !== undefined) {
-                        const minScore = Math.min(score1, score2);
-                        if (minScore > bestMinScore) {
-                            bestMinScore = minScore;
-                            bestPair = [{ idx: i, name: p1.name, score: score1 }, { idx: j, name: p2.name, score: score2 }];
-                        }
-                    }
-                }
-            }
-            
-            return bestPair;
+        // Find top 2 attackers by score
+        function getTopAttackers(pool, defenderName) {
+            if (!pool || pool.length < 2) return [];
+            return pool
+                .map((p, i) => ({ idx: p.idx !== undefined ? p.idx : i, name: p.name, score: p.scores?.[defenderName] }))
+                .filter(p => p.score !== undefined)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 2)
+                .map(p => p.idx);
         }
 
         function showMaximinSuggestion(pool, oppDefName, round) {
             if (!pool || pool.length < 2) return '';
             
             const attackerPool = pool.map(i => hkTeam.players[i]);
-            const bestPair = findMaximinAttackers(attackerPool, oppDefName, 'hk');
+            const top2 = getTopAttackers(attackerPool.map((p, i) => ({ ...p, idx: i })), oppDefName);
             
-            if (bestPair) {
-                const pairNames = bestPair.map(p => `${p.name}(${p.score.toFixed(1)})`).join(' + ');
+            if (top2.length === 2) {
+                const p1 = attackerPool[top2[0]];
+                const p2 = attackerPool[top2[1]];
+                const s1 = p1.scores?.[oppDefName]?.toFixed(1) || '-';
+                const s2 = p2.scores?.[oppDefName]?.toFixed(1) || '-';
                 return `<div style="margin-top:10px;padding:8px;background:#1a3a1a;border-radius:6px;font-size:0.85rem;">
-                    💡 <b>Maximin:</b> ${pairNames} (worst: ${bestPair[0].score <= bestPair[1].score ? bestPair[0].score.toFixed(1) : bestPair[1].score.toFixed(1)})
+                    💡 <b>Best Pair:</b> ${p1.name}(${s1}) + ${p2.name}(${s2})
                 </div>`;
             }
             return '';
+        }
+
+        function getTopStar(pool, defenderName, idx) {
+            if (!pool || pool.length < 2) return '';
+            const top2 = getTopAttackers(pool.map((p, i) => ({ ...p, idx: i })), defenderName);
+            return top2.includes(idx) ? ' ⭐' : '';
         }
 
         function showR1Attackers() {
@@ -841,7 +832,8 @@
                 const attScore = p.scores?.[oppDefName];
                 const oppDefPlayer = oppTeam.players[oppDef];
                 const defScore = oppDefPlayer?.scores?.[p.name];
-                return `<button class="pick-btn" data-team="hk" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                const star = getTopStar(hkPool, oppDefName, i);
+                return `<button class="pick-btn" data-team="hk" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
             }).join('') + showMaximinSuggestion(hkPool, oppDefName, 1);
 
             // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1071,7 +1063,8 @@
                     const attScore = p.scores?.[oppDefName];
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    const star = getTopStar(poolHK, oppDefName, i);
+                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
                 }).join('') + showMaximinSuggestion(poolHK, oppDefName, 2);
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1310,7 +1303,8 @@
                     const attScore = p.scores?.[oppDefName];
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
-                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                    const star = getTopStar(poolHK, oppDefName, i);
+                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
                 }).join('') + showMaximinSuggestion(poolHK, oppDefName, 3);
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
