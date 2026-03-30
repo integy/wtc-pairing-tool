@@ -804,7 +804,7 @@
                                 const attScore = p.scores?.[hkDefName];
                                 const hkDefPlayer = hkTeam.players[hkDef];
                                 const defScore = hkDefPlayer?.scores?.[p.name];
-                                return `<button class="pick-btn" onclick="r1PickAtt('hk', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                                return `<button class="pick-btn" onclick="r1PickAtt('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -831,7 +831,7 @@
                                 const attScore = p.scores?.[oppDefName];
                                 const oppDefPlayer = oppTeam.players[oppDef];
                                 const defScore = oppDefPlayer?.scores?.[p.name];
-                                return `<button class="pick-btn" onclick="r1PickAtt('opp', ${i})">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                                return `<button class="pick-btn" onclick="r1PickAtt('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -839,12 +839,12 @@
             `;
         }
 
-        function r1PickAtt(picker, targetIdx) {
+        function r1PickAtt(picker, targetIdx, btn) {
             rounds[1]['pick' + picker] = targetIdx;
 
             // Highlight selection
             document.querySelectorAll('#r1-match-' + picker + ' .pick-btn').forEach(b => b.classList.remove('selected'));
-            event.target.classList.add('selected');
+            btn.classList.add('selected');
         }
 
         function confirmRound1() {
@@ -1049,7 +1049,7 @@
                             ${(rounds[2].oppAttackers || []).map(i => {
                                 const p = oppTeam.players[i];
                                 const score = p.scores?.[hkDefName];
-                                return `<button class="pick-btn" onclick="r2Pick('hk', ${i})">${p.name}${getScoreDisplay(score)}</button>`;
+                                return `<button class="pick-btn" onclick="r2Pick('hk', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1074,7 +1074,7 @@
                             ${(rounds[2].hkAttackers || []).map(i => {
                                 const p = hkTeam.players[i];
                                 const score = p.scores?.[oppDefName];
-                                return `<button class="pick-btn" onclick="r2Pick('opp', ${i})">${p.name}${getScoreDisplay(score)}</button>`;
+                                return `<button class="pick-btn" onclick="r2Pick('opp', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1082,10 +1082,10 @@
             `;
         }
 
-        function r2Pick(picker, idx) {
+        function r2Pick(picker, idx, btn) {
             rounds[2]['pick' + picker] = idx;
             document.querySelectorAll('#r2-match-' + picker + ' .pick-btn').forEach(b => b.classList.remove('selected'));
-            event.target.classList.add('selected');
+            btn.classList.add('selected');
         }
 
         function confirmRound2() {
@@ -1220,27 +1220,6 @@
             }
         }
 
-        function toggleR3Att(team, idx) {
-            if (!rounds[3].hkAttackers) rounds[3].hkAttackers = [];
-            if (!rounds[3].oppAttackers) rounds[3].oppAttackers = [];
-
-            const arr = team === 'hk' ? rounds[3].hkAttackers : rounds[3].oppAttackers;
-            const existing = arr.indexOf(idx);
-            
-            if (existing > -1) {
-                arr.splice(existing, 1);
-                event.target.classList.remove('selected');
-            } else {
-                if (arr.length >= 2) { alert('Max 2!'); return; }
-                arr.push(idx);
-                event.target.classList.add('selected');
-            }
-
-            if (rounds[3].hkAttackers.length === 2 && rounds[3].oppAttackers.length === 2) {
-                showR3Pairing();
-            }
-        }
-
         function showR3Pairing() {
             document.getElementById('r3-pairing').style.display = 'block';
 
@@ -1267,7 +1246,7 @@
                             ${(rounds[3].oppAttackers || []).map(i => {
                                 const p = oppTeam.players[i];
                                 const score = p.scores?.[hkDefName];
-                                return `<button class="pick-btn" onclick="r3Pick('hk', ${i})">${p.name}${getScoreDisplay(score)}</button>`;
+                                return `<button class="pick-btn" onclick="r3Pick('hk', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1292,7 +1271,7 @@
                             ${(rounds[3].hkAttackers || []).map(i => {
                                 const p = hkTeam.players[i];
                                 const score = p.scores?.[oppDefName];
-                                return `<button class="pick-btn" onclick="r3Pick('opp', ${i})">${p.name}${getScoreDisplay(score)}</button>`;
+                                return `<button class="pick-btn" onclick="r3Pick('opp', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1300,10 +1279,10 @@
             `;
         }
 
-        function r3Pick(picker, idx) {
+        function r3Pick(picker, idx, btn) {
             rounds[3]['pick' + picker] = idx;
             document.querySelectorAll('#r3-match-' + picker + ' .pick-btn').forEach(b => b.classList.remove('selected'));
-            event.target.classList.add('selected');
+            btn.classList.add('selected');
         }
 
 
