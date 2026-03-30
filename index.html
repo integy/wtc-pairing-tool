@@ -950,6 +950,9 @@
             rounds[2].poolHK = [...rounds[1].unusedHK];
             rounds[2].poolOpp = [...rounds[1].unusedOpp];
 
+            // Debug
+            const r1UnusedNames = rounds[1].unusedHK.map(i => hkTeam.players[i]?.name || i).join(',');
+            alert(`R1 done: unusedHK=${rounds[1].unusedHK.length} (${r1UnusedNames})`);
             alert('Round 1 confirmed! Proceed to Round 2.');
             showPage('round2');
         }
@@ -958,6 +961,11 @@
             // Use pool set in confirmRound1
             const poolHK = rounds[2].poolHK || [];
             const poolOpp = rounds[2].poolOpp || [];
+            
+            // Debug
+            const hkNames = poolHK.map(i => hkTeam.players[i]?.name || i).join(',');
+            console.log(`initRound2: poolHK=${poolHK.length} (${hkNames})`);
+            alert(`R2 init: poolHK=${poolHK.length} players: ${hkNames}`);
 
             const content = document.getElementById('round2-content');
             content.innerHTML = `
@@ -1200,6 +1208,10 @@
             // Round 3: Same format first - select defender and 2 attackers
             const poolHK = rounds[2].unusedHK || [];
             const poolOpp = rounds[2].unusedOpp || [];
+            
+            // Debug
+            const hkNames = poolHK.map(i => hkTeam.players[i]?.name || i).join(',');
+            alert(`R3 init: poolHK=${poolHK.length} players: ${hkNames}`);
 
             const content = document.getElementById('round3-content');
             content.innerHTML = `
