@@ -993,11 +993,15 @@
             rounds[1].unusedHK = hkTeam.players.map((_, i) => i).filter(i => !hkUsed.has(i));
             rounds[1].unusedOpp = oppTeam.players.map((_, i) => i).filter(i => !oppUsed.has(i));
 
+            // DEBUG: log the calculation
+            console.log(`R1 confirm: hkDef=${hkDef}, pickhk=${rounds[1].pickhk}, hkAtts=${hkAtts.join(',')}`);
+            console.log(`hkUsed=[${[...hkUsed].join(',')}], unusedHK=${rounds[1].unusedHK.length}: ${rounds[1].unusedHK.join(',')}`);
+
             // For Round 2, the unused players become the pool
             rounds[2].poolHK = [...rounds[1].unusedHK];
             rounds[2].poolOpp = [...rounds[1].unusedOpp];
 
-            alert('Round 1 confirmed! Proceed to Round 2.');
+            alert(`R1 done: ${hkTeam.players[hkDef].name} + ${hkTeam.players[rounds[1].pickhk].name} used. ${rounds[1].unusedHK.length} HK for R2`);
             showPage('round2');
         }
 
