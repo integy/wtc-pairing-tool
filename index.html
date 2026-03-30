@@ -1377,17 +1377,17 @@
             const oppAtts = rounds[3].oppAttackers || [];
             
             // Debug: show all states
-            const fullPoolHK = rounds[2].unusedHK || [];
-            const hkDefName = hkTeam.players[hkDef]?.name;
-            const hkAttsNames = hkAtts.map(i => hkTeam.players[i]?.name).join(',');
-            const pickhkName = hkTeam.players[rounds[3].pickhk]?.name;
-            const poolHKnames = fullPoolHK.map(i => hkTeam.players[i]?.name).join(',');
+            const debugPoolHK = rounds[2].unusedHK || [];
+            const debugDefName = hkTeam.players[hkDef]?.name;
+            const debugAttsNames = hkAtts.map(i => hkTeam.players[i]?.name).join(',');
+            const debugPickName = hkTeam.players[rounds[3].pickhk]?.name;
+            const debugPoolNames = debugPoolHK.map(i => hkTeam.players[i]?.name).join(',');
             
-            const hkPickedSet = new Set([rounds[3].pickhk]);
-            const unpickedHK = hkAtts.filter(i => !hkPickedSet.has(i));
-            const unpickedNames = unpickedHK.map(i => hkTeam.players[i]?.name).join(',');
+            const debugPickedSet = new Set([rounds[3].pickhk]);
+            const debugUnpicked = hkAtts.filter(i => !debugPickedSet.has(i));
+            const debugUnpickedNames = debugUnpicked.map(i => hkTeam.players[i]?.name).join(',');
             
-            alert(`confirmRound3:\npoolHK=${fullPoolHK.length} (${poolHKnames})\nhkDef=${hkDef} (${hkDefName})\nhkAtts=${hkAtts.length} (${hkAttsNames})\npickhk=${rounds[3].pickhk} (${pickhkName})\nunpickedHK=${unpickedHK.length} (${unpickedNames})`);
+            alert(`confirmRound3:\npoolHK=${debugPoolHK.length} (${debugPoolNames})\nhkDef=${hkDef} (${debugDefName})\nhkAtts=${hkAtts.length} (${debugAttsNames})\npickhk=${rounds[3].pickhk} (${debugPickName})\nunpickedHK=${debugUnpicked.length} (${debugUnpickedNames})`);
 
             // Match 1: HK Defender vs Opp picked attacker (picked by Opp defender)
             allMatches.push({
@@ -1419,29 +1419,14 @@
                 });
             }
 
-            // Last remaining players from full pool (defenders already excluded from pool)
+            // Last remaining players from full pool
             const allUsedHK = new Set([hkDef, rounds[3].pickhk, ...unpickedHK]);
             const allUsedOpp = new Set([oppDef, rounds[3].pickopp, ...unpickedOpp]);
             
-            // Get all original pool players and filter out used ones
-            const fullPoolHK = rounds[2].unusedHK || [];
-            const fullPoolOpp = rounds[2].unusedOpp || [];
-            const lastHK = fullPoolHK.filter(i => !allUsedHK.has(i));
-            const lastOpp = fullPoolOpp.filter(i => !allUsedOpp.has(i));
-            
-            // Debug: alert counts with names
-            const unpickNames = unpickedHK.map(i => hkTeam.players[i]?.name || i).join(',');
-            const lastNames = lastHK.map(i => hkTeam.players[i]?.name || i).join(',');
-            alert(`R3 Debug:\nfullPoolHK=${fullPoolHK.length}\nunpickedHK=${unpickedHK.length} (${unpickNames})\nlastHK=${lastHK.length} (${lastNames})\nTotal R3 matches will be: ${2 + unpickedHK.length + lastHK.length}`);
-            
-            // Auto-pair unpicked attackers
-            for (let i = 0; i < unpickedHK.length && i < unpickedOpp.length; i++) {
-                allMatches.push({
-                    round: 3,
-                    hk: unpickedHK[i], hkRole: 'auto-paired',
-                    opp: unpickedOpp[i], oppRole: 'auto-paired'
-                });
-            }
+            const fullPoolHK2 = rounds[2].unusedHK || [];
+            const fullPoolOpp2 = rounds[2].unusedOpp || [];
+            const lastHK = fullPoolHK2.filter(i => !allUsedHK.has(i));
+            const lastOpp = fullPoolOpp2.filter(i => !allUsedOpp.has(i));
             
             // Auto-pair last remaining
             for (let i = 0; i < lastHK.length && i < lastOpp.length; i++) {
