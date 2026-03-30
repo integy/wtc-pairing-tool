@@ -781,9 +781,14 @@
 
         // Find top 2 attackers by score
         function getTopAttackers(pool, defenderName) {
+            // pool is array of player indices
             if (!pool || pool.length < 2) return [];
             return pool
-                .map((p, i) => ({ idx: p.idx !== undefined ? p.idx : i, name: p.name, score: p.scores?.[defenderName] }))
+                .map(playerIdx => ({ 
+                    idx: playerIdx, 
+                    name: hkTeam.players[playerIdx]?.name, 
+                    score: hkTeam.players[playerIdx]?.scores?.[defenderName] 
+                }))
                 .filter(p => p.score !== undefined)
                 .sort((a, b) => b.score - a.score)
                 .slice(0, 2)
@@ -793,16 +798,15 @@
         function showMaximinSuggestion(pool, oppDefName, round) {
             if (!pool || pool.length < 2) return '';
             
-            const attackerPool = pool.map(i => hkTeam.players[i]);
-            const top2 = getTopAttackers(attackerPool.map((p, i) => ({ ...p, idx: i })), oppDefName);
+            const top2 = getTopAttackers(pool, oppDefName);
             
             if (top2.length === 2) {
-                const p1 = attackerPool[top2[0]];
-                const p2 = attackerPool[top2[1]];
-                const s1 = p1.scores?.[oppDefName]?.toFixed(1) || '-';
-                const s2 = p2.scores?.[oppDefName]?.toFixed(1) || '-';
+                const p1 = hkTeam.players[top2[0]];
+                const p2 = hkTeam.players[top2[1]];
+                const s1 = p1?.scores?.[oppDefName]?.toFixed(1) || '-';
+                const s2 = p2?.scores?.[oppDefName]?.toFixed(1) || '-';
                 return `<div style="margin-top:10px;padding:8px;background:#1a3a1a;border-radius:6px;font-size:0.85rem;">
-                    💡 <b>Best Pair:</b> ${p1.name}(${s1}) + ${p2.name}(${s2})
+                    💡 <b>Best Pair:</b> ${p1?.name}(${s1}) + ${p2?.name}(${s2})
                 </div>`;
             }
             return '';
@@ -810,7 +814,9 @@
 
         function getTopStar(pool, defenderName, idx) {
             if (!pool || pool.length < 2) return '';
-            const top2 = getTopAttackers(pool.map((p, i) => ({ ...p, idx: i })), defenderName);
+            // pool is array of player indices, get actual players
+            const playerPool = pool.map(i => hkTeam.players[i]);
+            const top2 = getTopAttackers(playerPool.map((p, i) => ({ ...p, idx: pool[i] })), defenderName);
             return top2.includes(idx) ? ' ⭐' : '';
         }
 
