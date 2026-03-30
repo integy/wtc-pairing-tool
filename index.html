@@ -511,26 +511,26 @@
             
             // Backward induction: calculate best defender choice for HK
             // For each HK player as defender:
-            // - Opponent's best attacker against them (worst for HK)
-            // - HK's remaining attackers against opponent's defender
-            // Net advantage = HK attackers avg - Opp best attacker
+            // - Opponent picks their LOWEST scorer against this defender (to be attacker)
+            // - HK's remaining attackers pick best matchups against opponent's defenders
+            // Net = HK best attackers avg - opponent's worst attacker score
             const defenderAnalysis = hkIndices.map((hkIdx, displayIdx) => {
                 const hkPlayer = hkTeam.players[hkIdx];
-                // Opponent's best score against this HK player (what they'd face as defender)
-                let oppBestAttScore = -Infinity;
-                let oppBestAttName = '-';
+                
+                // Opponent's WORST (lowest) score against this HK player = who they'd pick as attacker
+                let oppWorstAttScore = Infinity;
+                let oppWorstAttName = '-';
                 oppPlayers.forEach(opp => {
                     const s = opp.scores?.[hkPlayer.name];
-                    if (s !== undefined && s > oppBestAttScore) {
-                        oppBestAttScore = s;
-                        oppBestAttName = opp.name;
+                    if (s !== undefined && s < oppWorstAttScore) {
+                        oppWorstAttScore = s;
+                        oppWorstAttName = opp.name;
                     }
                 });
                 
-                // HK's remaining attackers vs opponent's defenders
+                // HK's remaining attackers: each picks best opponent defender to attack
                 const remainingHKForAtt = hkIndices.filter(i => i !== hkIdx);
                 const hkAttackAvg = remainingHKForAtt.reduce((sum, idx) => {
-                    // Best attacker against each opponent defender
                     let best = -Infinity;
                     oppPlayers.forEach(opp => {
                         const s = hkTeam.players[idx].scores?.[opp.name];
@@ -539,8 +539,8 @@
                     return sum + (best > -Infinity ? best : 0);
                 }, 0) / (remainingHKForAtt.length || 1);
                 
-                const netAdvantage = hkAttackAvg - oppBestAttScore;
-                return { hkIdx, hkPlayer, oppBestAttScore, oppBestAttName, hkAttackAvg, netAdvantage, displayIdx };
+                const netAdvantage = hkAttackAvg - oppWorstAttScore;
+                return { hkIdx, hkPlayer, oppWorstAttScore, oppWorstAttName, hkAttackAvg, netAdvantage, displayIdx };
             });
             
             // Find all best defenders (max net advantage, including ties)
@@ -588,7 +588,7 @@
                 const names = bestDefenders.map(d => `${d.hkPlayer.name}`).join(', ');
                 const first = bestDefenders[0];
                 const star = bestDefenders.length > 1 ? ' ⭐⭐ (TIE)' : ' ⭐';
-                suggestDiv.innerHTML = `💡 <b>Suggested HK Defender${star}:</b> ${names} | vs ${first.oppBestAttName} = ${first.oppBestAttScore.toFixed(1)} | HK Attackers avg: ${first.hkAttackAvg.toFixed(1)} | Net: ${first.netAdvantage >= 0 ? '+' : ''}${first.netAdvantage.toFixed(1)}`;
+                suggestDiv.innerHTML = `💡 <b>Suggested HK Defender${star}:</b> ${names} | vs ${first.oppWorstAttName} = ${first.oppWorstAttScore.toFixed(1)} | HK Attackers avg: ${first.hkAttackAvg.toFixed(1)} | Net: ${first.netAdvantage >= 0 ? '+' : ''}${first.netAdvantage.toFixed(1)}`;
             }
             
             section.style.display = 'block';
