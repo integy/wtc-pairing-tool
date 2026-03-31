@@ -984,10 +984,10 @@
 
             rounds[1].done = true;
 
-            // Track USED players (1 defender + 1 picked attacker per team)
-            // The other attacker goes back to pool
-            const hkUsed = new Set([hkDef, rounds[1].pickhk]);
-            const oppUsed = new Set([oppDef, rounds[1].pickopp]);
+            // Track USED players (1 defender + 2 selected attackers per team)
+            // All participate in R1, so all are used up
+            const hkUsed = new Set([hkDef, ...hkAtts]);
+            const oppUsed = new Set([oppDef, ...oppAtts]);
 
             // Unused players return to pool for next round
             rounds[1].unusedHK = hkTeam.players.map((_, i) => i).filter(i => !hkUsed.has(i));
@@ -1001,7 +1001,7 @@
             rounds[2].poolHK = [...rounds[1].unusedHK];
             rounds[2].poolOpp = [...rounds[1].unusedOpp];
 
-            alert(`R1 done: ${hkTeam.players[hkDef].name} + ${hkTeam.players[rounds[1].pickhk].name} used. ${rounds[1].unusedHK.length} HK for R2`);
+            alert(`R1 Pairings:\n\nHK Defender ${hkTeam.players[hkDef].name} vs ${hkTeam.players[rounds[1].pickhk].name} (Opp picked)\nOpp Defender ${oppTeam.players[oppDef].name} vs ${hkTeam.players[rounds[1].pickopp].name} (HK picked)\n\nYour attackers: ${hkAtts.map(i => hkTeam.players[i].name).join(', ')}\nOpponent attackers: ${oppAtts.map(i => oppTeam.players[i].name).join(', ')}\n\nUnused for R2: ${rounds[1].unusedHK.length} HK, ${rounds[1].unusedOpp.length} Opp`);
             showPage('round2');
         }
 
