@@ -793,6 +793,8 @@
                 }))
                 .filter(p => p.score !== undefined);
             
+            console.log(`getTopAttackers: team=${team}, pool=${pool.join(',')}, def=${defenderName}, scored=${scored.map(p=>p.name+':'+p.score).join(',')}`);
+            
             if (scored.length < 2) return [];
             
             // Sort by score descending
@@ -828,6 +830,8 @@
         function getTopStar(pool, defenderName, idx, team) {
             if (!pool || pool.length < 2) return '';
             const top2 = getTopAttackers(pool, defenderName, team);
+            const players = team === 'hk' ? hkTeam.players : oppTeam.players;
+            console.log(`getTopStar: team=${team}, pool=${pool.join(',')}, def=${defenderName}, idx=${idx}, top2=${top2.join(',')}, player=${players[idx]?.name}`);
             return top2.includes(idx) ? ' ⭐' : '';
         }
 
