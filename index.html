@@ -896,8 +896,10 @@
 
             console.log(`After toggle: arr=[${arr.join(',')}]`);
 
-            if (rounds[1].hkAttackers.length === 2 && rounds[1].oppAttackers.length === 2) {
+            if (rounds[1].hkAttackers.length >= 1 && rounds[1].oppAttackers.length >= 1) {
                 showR1Pairing();
+            } else {
+                document.getElementById('r1-pairing-section').style.display = 'none';
             }
         }
 
@@ -1127,8 +1129,10 @@
                 btn.classList.add('selected');
             }
 
-            if (rounds[2].hkAttackers.length === 2 && rounds[2].oppAttackers.length === 2) {
+            if (rounds[2].hkAttackers.length >= 1 && rounds[2].oppAttackers.length >= 1) {
                 showR2Pairing();
+            } else {
+                document.getElementById('r2-pairing').style.display = 'none';
             }
         }
 
@@ -1148,8 +1152,10 @@
                 btn.classList.add('selected');
             }
 
-            if (rounds[3].hkAttackers.length === 2 && rounds[3].oppAttackers.length === 2) {
+            if (rounds[3].hkAttackers.length >= 1 && rounds[3].oppAttackers.length >= 1) {
                 showR3Pairing();
+            } else {
+                document.getElementById('r3-pairing').style.display = 'none';
             }
         }
 
