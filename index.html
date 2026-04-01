@@ -189,7 +189,7 @@
         <!-- Page 2: Round 1 -->
         <div class="page" id="page-round1">
             <div class="panel">
-                <div class="panel-title">⚔️ Round 1 - Attack/Defend</div>
+                <div class="panel-title">⚔️ Round 1 - Attack/Defend <span id="mode-badge" style="font-size:0.7rem;background:#333;padding:2px 8px;border-radius:10px;margin-left:8px;"></span></div>
                 
                 <!-- Score Matrix for Round pages -->
                 <div id="r1-matrix-section" style="display:none;margin-bottom:15px;">
@@ -434,6 +434,15 @@
                     btn.textContent = 'LOADED ✓';
                     btn.style.background = '#4ade80';
                     showScoreMatrix();
+                    // Update pairing button text based on team size
+                    const startBtn = document.querySelector('#page-setup .btn-primary');
+                    const hkSize = hkTeam ? hkTeam.players.length : 0;
+                    const oppSize = oppTeam ? oppTeam.players.length : 0;
+                    if (hkSize === 6 && oppSize === 6) {
+                        startBtn.textContent = 'Start 2-Round Pairing (6P) →';
+                    } else {
+                        startBtn.textContent = 'Start 3-Round Pairing (8P) →';
+                    }
                 }
             };
             
@@ -602,7 +611,6 @@
             
             const players = [];
             teamEl.querySelectorAll('player').forEach((p, i) => {
-                if (i >= 8) return;
                 
                 // Parse scores (XML uses 'opponent' attribute)
                 const scores = {};
@@ -724,6 +732,15 @@
         }
 
         function startPairing() {
+            // Detect team size: both teams must be 6 for 6-person mode, otherwise 8
+            const hkSize = hkTeam ? hkTeam.players.length : 0;
+            const oppSize = oppTeam ? oppTeam.players.length : 0;
+            window.teamSizeMode = (hkSize === 6 && oppSize === 6) ? 6 : 8;
+            
+            // Set mode badge
+            const badge = document.getElementById('mode-badge');
+            if (badge) badge.textContent = window.teamSizeMode === 6 ? '6-Person Mode' : '8-Person Mode';
+            
             // Mark players in rounds
             rounds[1] = { usedHK: [], usedOpp: [] };
             rounds[2] = { usedHK: [], usedOpp: [] };
@@ -1019,10 +1036,34 @@
             rounds[2].poolHK = [...rounds[1].unusedHK];
             rounds[2].poolOpp = [...rounds[1].unusedOpp];
 
-            showPage('round2');
+            if (window.teamSizeMode === 6) {
+                // 6-person mode: skip R2, go directly to R3
+                // R3 pool = R1 unused (4 players each side)
+                rounds[3].poolHK = [...rounds[1].unusedHK];
+                rounds[3].poolOpp = [...rounds[1].unusedOpp];
+                alert('Round 1 confirmed! 6-person mode: skipping Round 2 → going to Round 3.');
+                showPage('round3');
+            } else {
+                showPage('round2');
+            }
         }
 
         function initRound2() {
+            // 6-person mode: skip R2
+            if (window.teamSizeMode === 6) {
+                document.getElementById('round2-content').innerHTML = `
+                    <div style="text-align:center;padding:40px;">
+                        <div style="font-size:3rem;margin-bottom:15px;">⏭️</div>
+                        <h3 style="color:#FFDE00;">Round 2 Skipped</h3>
+                        <p style="color:#8892b0;">6-person mode: only 4 players remaining per team.<br>R1 → R3 → Results</p>
+                        <div class="btn-center" style="margin-top:20px;">
+                            <button class="btn btn-primary" onclick="showPage('round3')">Go to Round 3 →</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
             // Use pool set in confirmRound1
             const poolHK = rounds[2].poolHK || [];
             const poolOpp = rounds[2].poolOpp || [];
@@ -1482,8 +1523,15 @@
             
             const fullPoolHK2 = rounds[2].unusedHK || [];
             const fullPoolOpp2 = rounds[2].unusedOpp || [];
-            const lastHK = fullPoolHK2.filter(i => !allUsedHK.has(i));
-            const lastOpp = fullPoolOpp2.filter(i => !allUsedOpp.has(i));
+            
+            // In 6P mode, R2 was skipped so pool comes from R1 unused
+            const sixP_HK_Pool = rounds[1].unusedHK || [];
+            const sixP_Opp_Pool = rounds[1].unusedOpp || [];
+            // Prefer R2 pool (8P mode), fall back to R1 pool (6P mode)
+            const prevUnusedHK = fullPoolHK2.length ? fullPoolHK2 : sixP_HK_Pool;
+            const prevUnusedOpp = fullPoolOpp2.length ? fullPoolOpp2 : sixP_Opp_Pool;
+            const lastHK = prevUnusedHK.filter(i => !allUsedHK.has(i));
+            const lastOpp = prevUnusedOpp.filter(i => !allUsedOpp.has(i));
             
             // Auto-pair last remaining
             for (let i = 0; i < lastHK.length && i < lastOpp.length; i++) {
