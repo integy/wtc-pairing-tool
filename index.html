@@ -1317,8 +1317,10 @@
 
         function initRound3() {
             // Round 3: Same format first - select defender and 2 attackers
-            const poolHK = rounds[2].unusedHK || [];
-            const poolOpp = rounds[2].unusedOpp || [];
+            // In 6P mode, pool was set by confirmRound1() into rounds[3].poolHK
+            // In 8P mode, pool comes from rounds[2].unusedHK
+            const poolHK = rounds[3].poolHK || rounds[2].unusedHK || [];
+            const poolOpp = rounds[3].poolOpp || rounds[2].unusedOpp || [];
 
             const content = document.getElementById('round3-content');
             content.innerHTML = `
