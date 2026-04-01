@@ -931,7 +931,8 @@
                                 const attScore = p.scores?.[hkDefName];
                                 const hkDefPlayer = hkTeam.players[hkDef];
                                 const defScore = hkDefPlayer?.scores?.[p.name];
-                                return `<button class="pick-btn" onclick="r1PickAtt('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                                const isSelected = rounds[1].pickopp === i ? ' selected' : '';
+                                return `<button class="pick-btn${isSelected}" onclick="r1PickAtt('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -958,7 +959,8 @@
                                 const attScore = p.scores?.[oppDefName];
                                 const oppDefPlayer = oppTeam.players[oppDef];
                                 const defScore = oppDefPlayer?.scores?.[p.name];
-                                return `<button class="pick-btn" onclick="r1PickAtt('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
+                                const isSelected = rounds[1].pickhk === i ? ' selected' : '';
+                                return `<button class="pick-btn${isSelected}" onclick="r1PickAtt('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1185,7 +1187,8 @@
                             ${(rounds[2].oppAttackers || []).map(i => {
                                 const p = oppTeam.players[i];
                                 const score = p.scores?.[hkDefName];
-                                return `<button class="pick-btn" onclick="r2Pick('opp', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
+                                const isSelected = rounds[2].pickopp === i ? ' selected' : '';
+                                return `<button class="pick-btn${isSelected}" onclick="r2Pick('opp', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1210,7 +1213,8 @@
                             ${(rounds[2].hkAttackers || []).map(i => {
                                 const p = hkTeam.players[i];
                                 const score = p.scores?.[oppDefName];
-                                return `<button class="pick-btn" onclick="r2Pick('hk', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
+                                const isSelected = rounds[2].pickhk === i ? ' selected' : '';
+                                return `<button class="pick-btn${isSelected}" onclick="r2Pick('hk', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1383,7 +1387,8 @@
                             ${(rounds[3].oppAttackers || []).map(i => {
                                 const p = oppTeam.players[i];
                                 const score = p.scores?.[hkDefName];
-                                return `<button class="pick-btn" onclick="r3Pick('opp', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
+                                const isSelected = rounds[3].pickopp === i ? ' selected' : '';
+                                return `<button class="pick-btn${isSelected}" onclick="r3Pick('opp', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
@@ -1408,7 +1413,8 @@
                             ${(rounds[3].hkAttackers || []).map(i => {
                                 const p = hkTeam.players[i];
                                 const score = p.scores?.[oppDefName];
-                                return `<button class="pick-btn" onclick="r3Pick('hk', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
+                                const isSelected = rounds[3].pickhk === i ? ' selected' : '';
+                                return `<button class="pick-btn${isSelected}" onclick="r3Pick('hk', ${i}, this)">${p.name}${getScoreDisplay(score)}</button>`;
                             }).join('')}
                         </div>
                     </div>
