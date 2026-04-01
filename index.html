@@ -793,7 +793,7 @@
                 }))
                 .filter(p => p.score !== undefined);
             
-            console.log(`getTopAttackers: team=${team}, pool=${pool.join(',')}, def=${defenderName}, scored=${scored.map(p=>p.name+':'+p.score).join(',')}`);
+
             
             if (scored.length < 2) return [];
             
@@ -831,7 +831,7 @@
             if (!pool || pool.length < 2) return '';
             const top2 = getTopAttackers(pool, defenderName, team);
             const players = team === 'hk' ? hkTeam.players : oppTeam.players;
-            console.log(`getTopStar: team=${team}, pool=${pool.join(',')}, def=${defenderName}, idx=${idx}, top2=${top2.join(',')}, player=${players[idx]?.name}`);
+
             return top2.includes(idx) ? ' ⭐' : '';
         }
 
@@ -880,8 +880,6 @@
             const arr = team === 'hk' ? rounds[1].hkAttackers : rounds[1].oppAttackers;
             
             const existingIdx = arr.indexOf(idx);
-            console.log(`toggleR1Att: team=${team}, idx=${idx}, existingIdx=${existingIdx}, arr=[${arr.join(',')}]`);
-            
             if (existingIdx > -1) {
                 arr.splice(existingIdx, 1);
                 btn.classList.remove('selected');
@@ -893,8 +891,6 @@
                 arr.push(idx);
                 btn.classList.add('selected');
             }
-
-            console.log(`After toggle: arr=[${arr.join(',')}]`);
 
             if (rounds[1].hkAttackers.length >= 1 && rounds[1].oppAttackers.length >= 1) {
                 showR1Pairing();
@@ -969,10 +965,7 @@
         }
 
         function r1PickAtt(picker, targetIdx, btn) {
-            const teamName = picker === 'hk' ? hkTeam.players[targetIdx]?.name : oppTeam.players[targetIdx]?.name;
-            console.log(`r1PickAtt: picker=${picker}, targetIdx=${targetIdx}(${teamName}), old pickhk=${rounds[1].pickhk}(${hkTeam.players[rounds[1].pickhk]?.name}), old pickopp=${rounds[1].pickopp}(${oppTeam.players[rounds[1].pickopp]?.name})`);
             rounds[1]['pick' + picker] = targetIdx;
-            console.log(`  -> set pick${picker}=${targetIdx}(${teamName})`);
 
             // Highlight selection - correct container mapping:
             // Match 1 (HK Defender vs Opp Attacker): r1PickAtt('opp', ...) -> buttons in #r1-match-hk
@@ -1022,16 +1015,10 @@
             rounds[1].unusedHK = hkTeam.players.map((_, i) => i).filter(i => !hkUsed.has(i));
             rounds[1].unusedOpp = oppTeam.players.map((_, i) => i).filter(i => !oppUsed.has(i));
 
-            // DEBUG: log the calculation
-            console.log(`R1 confirm: hkDef=${hkDef}(${hkTeam.players[hkDef]?.name}), pickopp=${rounds[1].pickopp}(${oppTeam.players[rounds[1].pickopp]?.name}), pickhk=${rounds[1].pickhk}(${hkTeam.players[rounds[1].pickhk]?.name})`);
-            console.log(`hkAtts=[${hkAtts.join(',')}]:${hkAtts.map(i=>hkTeam.players[i]?.name).join(',')}, oppAtts=[${oppAtts.join(',')}]:${oppAtts.map(i=>oppTeam.players[i]?.name).join(',')}`);
-            console.log(`hkUsed=[${[...hkUsed].join(',')}]:${[...hkUsed].map(i=>hkTeam.players[i]?.name).join(',')}, unusedHK=${rounds[1].unusedHK.length}: ${rounds[1].unusedHK.map(i=>hkTeam.players[i]?.name).join(',')}`);
-
             // For Round 2, the unused players become the pool
             rounds[2].poolHK = [...rounds[1].unusedHK];
             rounds[2].poolOpp = [...rounds[1].unusedOpp];
 
-            alert(`R1 Pairings:\n\nHK Defender ${hkTeam.players[hkDef].name} vs ${hkTeam.players[rounds[1].pickopp].name} (Opp picked)\nOpp Defender ${oppTeam.players[oppDef].name} vs ${hkTeam.players[rounds[1].pickhk].name} (HK picked)\n\nYour attackers: ${hkAtts.map(i => hkTeam.players[i].name).join(', ')}\nOpponent attackers: ${oppAtts.map(i => oppTeam.players[i].name).join(', ')}\n\nUnused for R2: ${rounds[1].unusedHK.length} HK, ${rounds[1].unusedOpp.length} Opp`);
             showPage('round2');
         }
 
