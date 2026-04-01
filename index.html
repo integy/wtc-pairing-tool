@@ -974,8 +974,11 @@
             rounds[1]['pick' + picker] = targetIdx;
             console.log(`  -> set pick${picker}=${targetIdx}(${teamName})`);
 
-            // Highlight selection
-            document.querySelectorAll('#r1-match-' + picker + ' .pick-btn').forEach(b => b.classList.remove('selected'));
+            // Highlight selection - correct container mapping:
+            // Match 1 (HK Defender vs Opp Attacker): r1PickAtt('opp', ...) -> buttons in #r1-match-hk
+            // Match 2 (Opp Defender vs HK Attacker): r1PickAtt('hk', ...) -> buttons in #r1-match-opp
+            const containerId = picker === 'opp' ? 'r1-match-hk' : 'r1-match-opp';
+            document.querySelectorAll('#' + containerId + ' .pick-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
         }
 
@@ -1228,7 +1231,11 @@
 
         function r2Pick(picker, idx, btn) {
             rounds[2]['pick' + picker] = idx;
-            document.querySelectorAll('#r2-match-' + picker + ' .pick-btn').forEach(b => b.classList.remove('selected'));
+            // Correct container mapping:
+            // Match 3 (HK Defender vs Opp Attacker): r2Pick('opp', ...) -> buttons in #r2-match-hk
+            // Match 4 (Opp Defender vs HK Attacker): r2Pick('hk', ...) -> buttons in #r2-match-opp
+            const containerId = picker === 'opp' ? 'r2-match-hk' : 'r2-match-opp';
+            document.querySelectorAll('#' + containerId + ' .pick-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
         }
 
@@ -1428,7 +1435,11 @@
 
         function r3Pick(picker, idx, btn) {
             rounds[3]['pick' + picker] = idx;
-            document.querySelectorAll('#r3-match-' + picker + ' .pick-btn').forEach(b => b.classList.remove('selected'));
+            // Correct container mapping:
+            // R3 Match N (HK Defender vs Opp Attacker): r3Pick('opp', ...) -> buttons in #r3-match-hk
+            // R3 Match N+1 (Opp Defender vs HK Attacker): r3Pick('hk', ...) -> buttons in #r3-match-opp
+            const containerId = picker === 'opp' ? 'r3-match-hk' : 'r3-match-opp';
+            document.querySelectorAll('#' + containerId + ' .pick-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
         }
 
