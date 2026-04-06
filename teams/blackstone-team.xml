@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<team>
+    <name>黑石要塞</name>
+    <players>
+        <player>
+            <name>Custodes</name>
+            <army>Custodes</army>
+            <scores>
+                <score opponent="Death Guard">4.0</score>
+                <score opponent="Votann">3.5</score>
+                <score opponent="Ultra Marine">4.0</score>
+                <score opponent="Imperial Guard">3.0</score>
+                <score opponent="World Eaters">3.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Death Guard</name>
+            <army>Death Guard</army>
+            <scores>
+                <score opponent="Custodes">3.0</score>
+                <score opponent="Votann">2.5</score>
+                <score opponent="Ultra Marine">3.5</score>
+                <score opponent="Imperial Guard">4.0</score>
+                <score opponent="World Eaters">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Votann</name>
+            <army>Votann</army>
+            <scores>
+                <score opponent="Custodes">2.5</score>
+                <score opponent="Death Guard">4.0</score>
+                <score opponent="Ultra Marine">3.0</score>
+                <score opponent="Imperial Guard">3.5</score>
+                <score opponent="World Eaters">4.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Ultra Marine</name>
+            <army>Ultra Marine</army>
+            <scores>
+                <score opponent="Custodes">3.0</score>
+                <score opponent="Death Guard">4.5</score>
+                <score opponent="Votann">3.5</score>
+                <score opponent="Imperial Guard">3.0</score>
+                <score opponent="World Eaters">4.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Imperial Guard</name>
+            <army>Imperial Guard</army>
+            <scores>
+                <score opponent="Custodes">2.0</score>
+                <score opponent="Death Guard">3.5</score>
+                <score opponent="Votann">4.0</score>
+                <score opponent="Ultra Marine">3.5</score>
+                <score opponent="World Eaters">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>World Eaters</name>
+            <army>World Eaters</army>
+            <scores>
+                <score opponent="Custodes">4.5</score>
+                <score opponent="Death Guard">3.0</score>
+                <score opponent="Votann">2.0</score>
+                <score opponent="Ultra Marine">3.5</score>
+                <score opponent="Imperial Guard">4.0</score>
+            </scores>
+        </player>
+    </players>
+</team>
