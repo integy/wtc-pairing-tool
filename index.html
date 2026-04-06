@@ -5,6 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WTC Team Pairing Tool - Hong Kong Team</title>
     <style>
+
+        .password-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+        }
+        .password-overlay.hidden {
+            display: none;
+        }
+        .password-box {
+            background: #16213e;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .password-box h2 {
+            color: #FFDE00;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .password-box input {
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #8892b0;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            width: 200px;
+            margin-bottom: 15px;
+        }
+        .password-box input:focus {
+            outline: none;
+            border-color: #DE2910;
+        }
+        .password-box button {
+            padding: 12px 30px;
+            background: #DE2910;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .password-box button:hover {
+            background: #c4170a;
+        }
+        .password-error {
+            color: #ff6b6b;
+            margin-top: 10px;
+            display: none;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: #1a1a2e; color: #eaeaea; min-height: 100vh; }
 
@@ -109,6 +168,16 @@
     </style>
 </head>
 <body>
+    <div id="passwordOverlay" class="password-overlay">
+        <div class="password-box">
+            <h2>🔒 WTC Pairing Tool</h2>
+            <input type="password" id="passwordInput" placeholder="Enter Password" onkeypress="if(event.key==='Enter')checkPassword()">
+            <button onclick="checkPassword()">Enter</button>
+            <div id="passwordError" class="password-error">Incorrect Password</div>
+        </div>
+    </div>
+
+
     <div class="header">
         <h1>🇭🇰 WTC Team Pairing Tool</h1>
         <div class="subtitle">Hong Kong Team - Official Helper</div>
@@ -1642,6 +1711,17 @@
             document.getElementById('hk-avg-score').textContent = hkAvg;
             document.getElementById('opp-avg-score').textContent = oppAvg;
         }
-    </script>
+    
+        function checkPassword() {
+            const pwd = document.getElementById('passwordInput').value;
+            if (pwd === '0821') {
+                document.getElementById('passwordOverlay').classList.add('hidden');
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+</script>
 </body>
 </html>
