@@ -3,69 +3,69 @@
     <name>黑石要塞一隊</name>
     <players>
         <player>
-            <name>Custodes</name>
-            <army>Custodes</army>
+            <name>1</name>
+            <army>1</army>
             <scores>
-                <score opponent="Death Guard">4.0</score>
-                <score opponent="Votann">3.5</score>
-                <score opponent="Ultra Marine">4.0</score>
-                <score opponent="Imperial Guard">3.0</score>
-                <score opponent="World Eaters">3.5</score>
+                <score opponent="2">4.0</score>
+                <score opponent="3">3.5</score>
+                <score opponent="4">4.0</score>
+                <score opponent="5">3.0</score>
+                <score opponent="6">3.5</score>
             </scores>
         </player>
         <player>
-            <name>Death Guard</name>
-            <army>Death Guard</army>
+            <name>2</name>
+            <army>2</army>
             <scores>
-                <score opponent="Custodes">3.0</score>
-                <score opponent="Votann">2.5</score>
-                <score opponent="Ultra Marine">3.5</score>
-                <score opponent="Imperial Guard">4.0</score>
-                <score opponent="World Eaters">3.0</score>
+                <score opponent="1">3.0</score>
+                <score opponent="3">2.5</score>
+                <score opponent="4">3.5</score>
+                <score opponent="5">4.0</score>
+                <score opponent="6">3.0</score>
             </scores>
         </player>
         <player>
-            <name>Votann</name>
-            <army>Votann</army>
+            <name>3</name>
+            <army>3</army>
             <scores>
-                <score opponent="Custodes">2.5</score>
-                <score opponent="Death Guard">4.0</score>
-                <score opponent="Ultra Marine">3.0</score>
-                <score opponent="Imperial Guard">3.5</score>
-                <score opponent="World Eaters">4.5</score>
+                <score opponent="1">2.5</score>
+                <score opponent="2">4.0</score>
+                <score opponent="4">3.0</score>
+                <score opponent="5">3.5</score>
+                <score opponent="6">4.5</score>
             </scores>
         </player>
         <player>
-            <name>Ultra Marine</name>
-            <army>Ultra Marine</army>
+            <name>4</name>
+            <army>4</army>
             <scores>
-                <score opponent="Custodes">3.0</score>
-                <score opponent="Death Guard">4.5</score>
-                <score opponent="Votann">3.5</score>
-                <score opponent="Imperial Guard">3.0</score>
-                <score opponent="World Eaters">4.0</score>
+                <score opponent="1">3.0</score>
+                <score opponent="2">4.5</score>
+                <score opponent="3">3.5</score>
+                <score opponent="5">3.0</score>
+                <score opponent="6">4.0</score>
             </scores>
         </player>
         <player>
-            <name>Imperial Guard</name>
-            <army>Imperial Guard</army>
+            <name>5</name>
+            <army>5</army>
             <scores>
-                <score opponent="Custodes">2.0</score>
-                <score opponent="Death Guard">3.5</score>
-                <score opponent="Votann">4.0</score>
-                <score opponent="Ultra Marine">3.5</score>
-                <score opponent="World Eaters">3.0</score>
+                <score opponent="1">2.0</score>
+                <score opponent="2">3.5</score>
+                <score opponent="3">4.0</score>
+                <score opponent="4">3.5</score>
+                <score opponent="6">3.0</score>
             </scores>
         </player>
         <player>
-            <name>World Eaters</name>
-            <army>World Eaters</army>
+            <name>6</name>
+            <army>6</army>
             <scores>
-                <score opponent="Custodes">4.5</score>
-                <score opponent="Death Guard">3.0</score>
-                <score opponent="Votann">2.0</score>
-                <score opponent="Ultra Marine">3.5</score>
-                <score opponent="Imperial Guard">4.0</score>
+                <score opponent="1">4.5</score>
+                <score opponent="2">3.0</score>
+                <score opponent="3">2.0</score>
+                <score opponent="4">3.5</score>
+                <score opponent="5">4.0</score>
             </scores>
         </player>
     </players>
