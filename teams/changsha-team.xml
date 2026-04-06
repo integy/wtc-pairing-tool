@@ -67,8 +67,8 @@
             <army>Blood Angels</army>
             <scores>
                 <score opponent="Eric">4.0</score>
-                <score opponent="Morris">3.5</score>
-                <score opponent="Jireh">3.5</score>
+                <score opponent="Morris">3.0</score>
+                <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.5</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Gabriel">3.5</score>
