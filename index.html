@@ -678,7 +678,7 @@
             let hkTotals = hkNames.map(() => 0), hkCounts = hkNames.map(() => 0);
             
             oppPlayers.forEach((opp, oppIdx) => {
-                html += `<tr><td class="row-header">${opp.name}</td>`;
+                html += `<tr><td class="row-header">${opp.name}<br><span style="font-size:0.7rem;color:#888;">${opp.army}</span></td>`;
                 hkNames.forEach((hkName, i) => {
                     const score = opp.scores?.[hkName];
                     const color = score >= 4 ? '#4ade80' : score >= 3 ? '#fbbf24' : score !== undefined ? '#ef4444' : '#555';
