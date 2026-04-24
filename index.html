@@ -998,7 +998,7 @@
                 const oppDefPlayer = oppTeam.players[oppDef];
                 const defScore = oppDefPlayer?.scores?.[p.name];
                 const star = showStars ? getTopStar(hkPool, oppDefName, i, 'hk') : '';
-                return `<button class="pick-btn" data-team="hk" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
+                return `<button class="pick-btn" data-team="hk" data-idx="${i}" onclick="toggleR1Att(this)">${p.name} <span style="color:#888;font-size:0.7rem;">${p.army}</span>${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
             }).join('') + showMaximinSuggestion(hkPool, oppDefName, 1);
 
             // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1010,7 +1010,7 @@
                 const hkDefPlayer = hkTeam.players[hkDef];
                 const defScore = hkDefPlayer?.scores?.[p.name];
                 const star = showStars ? getTopStar(oppPool, hkDefName, i, 'opp') : '';
-                return `<button class="pick-btn" data-team="opp" data-idx="${i}" onclick="toggleR1Att(this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
+                return `<button class="pick-btn" data-team="opp" data-idx="${i}" onclick="toggleR1Att(this)">${p.name} <span style="color:#888;font-size:0.7rem;">${p.army}</span>${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
             }).join('');
         }
 
@@ -1261,7 +1261,7 @@
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
                     const star = getTopStar(poolHK, oppDefName, i, 'hk');
-                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR2Att('hk', ${i}, this)">${p.name} <span style="color:#888;font-size:0.7rem;">${p.army}</span>${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
                 }).join('') + showMaximinSuggestion(poolHK, oppDefName, 2);
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1271,7 +1271,7 @@
                     const hkDefPlayer = hkTeam.players[hkDef];
                     const defScore = hkDefPlayer?.scores?.[p.name];
                     const star = getTopStar(poolOpp, hkDefName, i, 'opp');
-                    return `<button class="pick-btn" onclick="toggleR2Att('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR2Att('opp', ${i}, this)">${p.name} <span style="color:#888;font-size:0.7rem;">${p.army}</span>${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
                 }).join('');
             }
         }
@@ -1514,7 +1514,7 @@
                     const oppDefPlayer = oppTeam.players[oppDef];
                     const defScore = oppDefPlayer?.scores?.[p.name];
                     const star = getTopStar(poolHK, oppDefName, i, 'hk');
-                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR3Att('hk', ${i}, this)">${p.name} <span style="color:#888;font-size:0.7rem;">${p.army}</span>${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
                 }).join('') + showMaximinSuggestion(poolHK, oppDefName, 3);
                 
                 // Opp Attackers - show score vs HK defender AND defender vs attacker
@@ -1524,7 +1524,7 @@
                     const hkDefPlayer = hkTeam.players[hkDef];
                     const defScore = hkDefPlayer?.scores?.[p.name];
                     const star = getTopStar(poolOpp, hkDefName, i, 'opp');
-                    return `<button class="pick-btn" onclick="toggleR3Att('opp', ${i}, this)">${p.name}${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
+                    return `<button class="pick-btn" onclick="toggleR3Att('opp', ${i}, this)">${p.name} <span style="color:#888;font-size:0.7rem;">${p.army}</span>${getScoreDisplayBoth(attScore, defScore)}${star}</button>`;
                 }).join('');
             }
         }
