@@ -7,11 +7,11 @@
             <army>Imperial Guard - Gizzeld Company</army>
             <scores>
                 <score opponent="Eric">3.0</score>
-                <score opponent="Gabriel">3.5</score>
+                <score opponent="Gabrielle">3.5</score>
                 <score opponent="Ivan">2.5</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.5</score>
-                <score opponent="Terence">3.0</score>
+                <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">3.5</score>
                 <score opponent="Kris">2.5</score>
             </scores>
@@ -21,11 +21,11 @@
             <army>Adeptus Mechanicus - Haloscreed Battle Clad</army>
             <scores>
                 <score opponent="Eric">2.5</score>
-                <score opponent="Gabriel">3.0</score>
+                <score opponent="Gabrielle">3.0</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">3.0</score>
-                <score opponent="Terence">3.0</score>
+                <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">3.5</score>
                 <score opponent="Kris">2.5</score>
             </scores>
@@ -35,11 +35,11 @@
             <army>Orks - Freebooter Krew</army>
             <scores>
                 <score opponent="Eric">3.5</score>
-                <score opponent="Gabriel">3.0</score>
+                <score opponent="Gabrielle">3.0</score>
                 <score opponent="Ivan">3.5</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">3.0</score>
-                <score opponent="Terence">3.5</score>
+                <score opponent="Terrence">3.5</score>
                 <score opponent="Quentin">3.0</score>
                 <score opponent="Kris">3.0</score>
             </scores>
@@ -49,11 +49,11 @@
             <army>Drukhari - Kabalite Cartel</army>
             <scores>
                 <score opponent="Eric">3.5</score>
-                <score opponent="Gabriel">2.5</score>
+                <score opponent="Gabrielle">2.5</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">3.5</score>
                 <score opponent="Kevin">2.0</score>
-                <score opponent="Terence">3.0</score>
+                <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">3.5</score>
                 <score opponent="Kris">2.5</score>
             </scores>
@@ -63,11 +63,11 @@
             <army>Necrons - Awakened Dynasty</army>
             <scores>
                 <score opponent="Eric">3.0</score>
-                <score opponent="Gabriel">3.0</score>
+                <score opponent="Gabrielle">3.0</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">2.0</score>
                 <score opponent="Kevin">3.5</score>
-                <score opponent="Terence">2.5</score>
+                <score opponent="Terrence">2.5</score>
                 <score opponent="Quentin">4.0</score>
                 <score opponent="Kris">4.0</score>
             </scores>
@@ -77,11 +77,11 @@
             <army>Black Templars - Bastion Task Force</army>
             <scores>
                 <score opponent="Eric">2.5</score>
-                <score opponent="Gabriel">2.0</score>
+                <score opponent="Gabrielle">2.0</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">2.5</score>
                 <score opponent="Kevin">3.0</score>
-                <score opponent="Terence">3.5</score>
+                <score opponent="Terrence">3.5</score>
                 <score opponent="Quentin">4.0</score>
                 <score opponent="Kris">4.0</score>
             </scores>
@@ -91,11 +91,11 @@
             <army>Custodes - Talons of the Emperor</army>
             <scores>
                 <score opponent="Eric">3.0</score>
-                <score opponent="Gabriel">2.0</score>
+                <score opponent="Gabrielle">2.0</score>
                 <score opponent="Ivan">2.0</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.0</score>
-                <score opponent="Terence">3.0</score>
+                <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">2.5</score>
                 <score opponent="Kris">3.5</score>
             </scores>
@@ -105,11 +105,11 @@
             <army>Tau - Mont'ka</army>
             <scores>
                 <score opponent="Eric">3.5</score>
-                <score opponent="Gabriel">3.5</score>
+                <score opponent="Gabrielle">3.5</score>
                 <score opponent="Ivan">2.5</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.0</score>
-                <score opponent="Terence">3.0</score>
+                <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">2.5</score>
                 <score opponent="Kris">2.5</score>
             </scores>
