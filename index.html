@@ -1203,7 +1203,7 @@
                     <h4 style="color:#DE2910;">🇭🇰 Select Defender</h4>
                     <select id="r2-hk-def" onchange="r2SelectDefender('hk', this.value)">
                         <option value="">-- Select --</option>
-                        ${poolHK.map(i => `<option value="${i}">${hkTeam.players[i].name}</option>`).join('')}
+                        ${poolHK.map(i => `<option value="${i}">${hkTeam.players[i].name} (${hkTeam.players[i].army})</option>`).join('')}
                     </select>
                 </div>
 
@@ -1211,7 +1211,7 @@
                     <h4 style="color:#00d4ff;">🌐 Select Defender</h4>
                     <select id="r2-opp-def" onchange="r2SelectDefender('opp', this.value)">
                         <option value="">-- Select --</option>
-                        ${poolOpp.map(i => `<option value="${i}">${oppTeam.players[i].name}</option>`).join('')}
+                        ${poolOpp.map(i => `<option value="${i}">${oppTeam.players[i].name} (${oppTeam.players[i].army})</option>`).join('')}
                     </select>
                 </div>
 
@@ -1454,7 +1454,7 @@
                     <h4 style="color:#DE2910;">🇭🇰 Select Defender</h4>
                     <select id="r3-hk-def" onchange="r3SelectDefender('hk', this.value)">
                         <option value="">-- Select --</option>
-                        ${poolHK.map(i => `<option value="${i}">${hkTeam.players[i].name}</option>`).join('')}
+                        ${poolHK.map(i => `<option value="${i}">${hkTeam.players[i].name} (${hkTeam.players[i].army})</option>`).join('')}
                     </select>
                 </div>
 
@@ -1462,7 +1462,7 @@
                     <h4 style="color:#00d4ff;">🌐 Select Defender</h4>
                     <select id="r3-opp-def" onchange="r3SelectDefender('opp', this.value)">
                         <option value="">-- Select --</option>
-                        ${poolOpp.map(i => `<option value="${i}">${oppTeam.players[i].name}</option>`).join('')}
+                        ${poolOpp.map(i => `<option value="${i}">${oppTeam.players[i].name} (${oppTeam.players[i].army})</option>`).join('')}
                     </select>
                 </div>
 
