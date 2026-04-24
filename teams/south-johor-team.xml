@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <team>
-    <name>South Johor</name>
+    <name>Team South Johor</name>
     <players>
+        <player>
+            <name>Geoff Husser</name>
+            <army>Imperial Guard - Gizzeld Company</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabriel">3.5</score>
+                <score opponent="Ivan">2.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terence">3.0</score>
+                <score opponent="Quentin">3.5</score>
+                <score opponent="Kris">2.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Jarod Lee</name>
+            <army>Adeptus Mechanicus - Haloscreed Battle Clad</army>
+            <scores>
+                <score opponent="Eric">2.5</score>
+                <score opponent="Gabriel">3.0</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">3.0</score>
+                <score opponent="Terence">3.0</score>
+                <score opponent="Quentin">3.5</score>
+                <score opponent="Kris">2.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Jensen Goh</name>
+            <army>Orks - Freebooter Krew</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabriel">3.0</score>
+                <score opponent="Ivan">3.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">3.0</score>
+                <score opponent="Terence">3.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Joachim Wong</name>
+            <army>Drukhari - Kabalite Cartel</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabriel">2.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.5</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terence">3.0</score>
+                <score opponent="Quentin">3.5</score>
+                <score opponent="Kris">2.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Jonathan Lee</name>
+            <army>Necrons - Awakened Dynasty</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabriel">3.0</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">2.0</score>
+                <score opponent="Kevin">3.5</score>
+                <score opponent="Terence">2.5</score>
+                <score opponent="Quentin">4.0</score>
+                <score opponent="Kris">4.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Paul Garcin</name>
+            <army>Black Templars - Bastion Task Force</army>
+            <scores>
+                <score opponent="Eric">2.5</score>
+                <score opponent="Gabriel">2.0</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">2.5</score>
+                <score opponent="Kevin">3.0</score>
+                <score opponent="Terence">3.5</score>
+                <score opponent="Quentin">4.0</score>
+                <score opponent="Kris">4.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Wesley Chan</name>
+            <army>Custodes - Talons of the Emperor</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabriel">2.0</score>
+                <score opponent="Ivan">2.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terence">3.0</score>
+                <score opponent="Quentin">2.5</score>
+                <score opponent="Kris">3.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Yao Yang Tan</name>
+            <army>Tau - Mont'ka</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabriel">3.5</score>
+                <score opponent="Ivan">2.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terence">3.0</score>
+                <score opponent="Quentin">2.5</score>
+                <score opponent="Kris">2.5</score>
+            </scores>
+        </player>
     </players>
 </team>
