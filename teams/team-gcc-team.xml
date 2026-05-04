@@ -2,5 +2,117 @@
 <team>
     <name>Team GCC</name>
     <players>
+        <player>
+            <name>Geoff Legg</name>
+            <army>Custodes</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">2.5</score>
+                <score opponent="Ivan">2.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Jai Hill</name>
+            <army>Votann</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">2.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terrence">2.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>James Phillips</name>
+            <army>Death Guard</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Kasper Wennerby</name>
+            <army>Ultramarines</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabrielle">3.0</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">3.0</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Matt Pugh</name>
+            <army>Necrons</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">3.0</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">2.0</score>
+                <score opponent="Kevin">3.5</score>
+                <score opponent="Terrence">2.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Matthew Ed</name>
+            <army>Ad Mech</army>
+            <scores>
+                <score opponent="Eric">2.5</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Osama Al Rumaihi</name>
+            <army>World Eaters</army>
+            <scores>
+                <score opponent="Eric">2.0</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">2.5</score>
+                <score opponent="Jireh">2.5</score>
+                <score opponent="Kevin">3.0</score>
+                <score opponent="Terrence">2.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Terry Mo</name>
+            <army>Aeldari</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
     </players>
 </team>

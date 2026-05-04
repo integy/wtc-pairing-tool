@@ -2,5 +2,117 @@
 <team>
     <name>GCC Academy</name>
     <players>
+        <player>
+            <name>Adam Charlesworth</name>
+            <army>Drukhari</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">2.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">2.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Andrey Vassiliev</name>
+            <army>Orks</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabrielle">2.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">3.0</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Charl Holtzhausen</name>
+            <army>Tau</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">2.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terrence">3.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Fernando Nahum</name>
+            <army>Death Guard</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.5</score>
+            </scores>
+        </player>
+        <player>
+            <name>Muhammad Farid</name>
+            <army>Dark Angels</army>
+            <scores>
+                <score opponent="Eric">2.0</score>
+                <score opponent="Gabrielle">3.0</score>
+                <score opponent="Ivan">2.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.0</score>
+                <score opponent="Terrence">3.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">4.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Remco Hentzepeter</name>
+            <army>Necrons</army>
+            <scores>
+                <score opponent="Eric">3.0</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">3.5</score>
+                <score opponent="Terrence">2.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Richard McCammon</name>
+            <army>Imperial Guard</army>
+            <scores>
+                <score opponent="Eric">3.5</score>
+                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Ivan">3.0</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">2.5</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
+        <player>
+            <name>Roland Shine</name>
+            <army>Imperial Knights</army>
+            <scores>
+                <score opponent="Eric">2.5</score>
+                <score opponent="Gabrielle">3.0</score>
+                <score opponent="Ivan">3.5</score>
+                <score opponent="Jireh">3.0</score>
+                <score opponent="Kevin">3.5</score>
+                <score opponent="Terrence">3.5</score>
+                <score opponent="Quentin">3.0</score>
+                <score opponent="Kris">3.0</score>
+            </scores>
+        </player>
     </players>
 </team>
