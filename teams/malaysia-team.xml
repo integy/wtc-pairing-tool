@@ -7,7 +7,7 @@
             <army>Necrons</army>
             <scores>
                 <score opponent="Eric">3</score>
-                <score opponent="Gabrielle">3</score>
+                <score opponent="Gabriel">3</score>
                 <score opponent="Ivan">2</score>
                 <score opponent="Jireh">3</score>
                 <score opponent="Kevin">3.5</score>
@@ -21,7 +21,7 @@
             <army>Chaos Space Marines</army>
             <scores>
                 <score opponent="Eric">2.5</score>
-                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Gabriel">3.5</score>
                 <score opponent="Ivan">3</score>
                 <score opponent="Jireh">2.5</score>
                 <score opponent="Kevin">3</score>
@@ -35,7 +35,7 @@
             <army>Tau</army>
             <scores>
                 <score opponent="Eric">3.5</score>
-                <score opponent="Gabrielle">3</score>
+                <score opponent="Gabriel">3</score>
                 <score opponent="Ivan">3.5</score>
                 <score opponent="Jireh">3</score>
                 <score opponent="Kevin">2</score>
@@ -49,7 +49,7 @@
             <army>Thousand Sons</army>
             <scores>
                 <score opponent="Eric">3</score>
-                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Gabriel">3.5</score>
                 <score opponent="Ivan">2.5</score>
                 <score opponent="Jireh">3</score>
                 <score opponent="Kevin">2.5</score>
@@ -63,7 +63,7 @@
             <army>Drukhari</army>
             <scores>
                 <score opponent="Eric">3.5</score>
-                <score opponent="Gabrielle">3</score>
+                <score opponent="Gabriel">3</score>
                 <score opponent="Ivan">3.5</score>
                 <score opponent="Jireh">3</score>
                 <score opponent="Kevin">3</score>
@@ -77,7 +77,7 @@
             <army>Deathwatch</army>
             <scores>
                 <score opponent="Eric">1</score>
-                <score opponent="Gabrielle">3.5</score>
+                <score opponent="Gabriel">3.5</score>
                 <score opponent="Ivan">3</score>
                 <score opponent="Jireh">3</score>
                 <score opponent="Kevin">2.5</score>
@@ -91,7 +91,7 @@
             <army>Grey Knights</army>
             <scores>
                 <score opponent="Eric">2</score>
-                <score opponent="Gabrielle">2</score>
+                <score opponent="Gabriel">2</score>
                 <score opponent="Ivan">1</score>
                 <score opponent="Jireh">3.5</score>
                 <score opponent="Kevin">3</score>
@@ -105,7 +105,7 @@
             <army>Imperial Guard</army>
             <scores>
                 <score opponent="Eric">2.5</score>
-                <score opponent="Gabrielle">3</score>
+                <score opponent="Gabriel">3</score>
                 <score opponent="Ivan">2.5</score>
                 <score opponent="Jireh">3</score>
                 <score opponent="Kevin">2</score>
