@@ -12,8 +12,8 @@
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.0</score>
                 <score opponent="Terrence">3.0</score>
-                <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Quentin">3.5</score>
+                <score opponent="Kris">3.5</score>
             </scores>
         </player>
         <player>
@@ -25,8 +25,8 @@
                 <score opponent="Ivan">2.5</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.5</score>
-                <score opponent="Terrence">2.5</score>
-                <score opponent="Quentin">3.0</score>
+                <score opponent="Terrence">3.0</score>
+                <score opponent="Quentin">2.0</score>
                 <score opponent="Kris">3.0</score>
             </scores>
         </player>
@@ -36,12 +36,12 @@
             <scores>
                 <score opponent="Eric">3.0</score>
                 <score opponent="Gabriel">3.5</score>
-                <score opponent="Ivan">3.0</score>
+                <score opponent="Ivan">2.5</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.5</score>
                 <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Kris">3.5</score>
             </scores>
         </player>
         <player>
@@ -55,7 +55,7 @@
                 <score opponent="Kevin">3.0</score>
                 <score opponent="Terrence">3.0</score>
                 <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Kris">2.5</score>
             </scores>
         </player>
         <player>
@@ -63,13 +63,13 @@
             <army>Necrons</army>
             <scores>
                 <score opponent="Eric">3.0</score>
-                <score opponent="Gabriel">3.0</score>
+                <score opponent="Gabriel">2.5</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">2.0</score>
                 <score opponent="Kevin">3.5</score>
                 <score opponent="Terrence">2.5</score>
-                <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Quentin">4.0</score>
+                <score opponent="Kris">3.5</score>
             </scores>
         </player>
         <player>
@@ -82,8 +82,8 @@
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.5</score>
                 <score opponent="Terrence">3.0</score>
-                <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Quentin">2.5</score>
+                <score opponent="Kris">2.0</score>
             </scores>
         </player>
         <player>
@@ -92,12 +92,12 @@
             <scores>
                 <score opponent="Eric">2.0</score>
                 <score opponent="Gabriel">3.5</score>
-                <score opponent="Ivan">2.5</score>
+                <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">2.5</score>
                 <score opponent="Kevin">3.0</score>
                 <score opponent="Terrence">2.0</score>
                 <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Kris">4.0</score>
             </scores>
         </player>
         <player>
@@ -105,13 +105,13 @@
             <army>Aeldari</army>
             <scores>
                 <score opponent="Eric">3.0</score>
-                <score opponent="Gabriel">3.5</score>
+                <score opponent="Gabriel">3.0</score>
                 <score opponent="Ivan">3.0</score>
                 <score opponent="Jireh">3.0</score>
                 <score opponent="Kevin">2.5</score>
                 <score opponent="Terrence">3.0</score>
-                <score opponent="Quentin">3.0</score>
-                <score opponent="Kris">3.0</score>
+                <score opponent="Quentin">2.5</score>
+                <score opponent="Kris">2.5</score>
             </scores>
         </player>
     </players>
